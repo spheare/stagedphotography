@@ -1,0 +1,17 @@
+{
+  "name": "virtualgallery",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "aframe-watcher": "^1.1.1",
+    "live-server": "^1.2.1"
+  },
+  "scripts": {
+    "watch": "aframe-watcher index.html",
+    "serve": "live-server"
+  },
+  "author": "Kevin Vaesen",
+  "license": "ISC"
+}
