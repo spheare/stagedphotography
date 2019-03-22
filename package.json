@@ -10,7 +10,7 @@
   },
   "scripts": {
     "watch": "aframe-watcher index.html",
-    "serve": "live-server"
+    "serve": "live-server --https=/usr/local/lib/node_modules/live-server-https --host=0.0.0.0"
   },
   "author": "Kevin Vaesen",
   "license": "ISC"

@@ -18,14 +18,15 @@
 </head>
 
 <body>
-	<a-scene background="color:#ECECEC" >
+	<a-scene background="color:#ECECEC">
+			<a-animation attribute="background.color" 	 easing="linear" dur="60000" from="#fffce4" to="#ffbe78" direction="alternate" repeat="indefinite"></a-animation>
 
 		<!-- assets -->
 		<a-assets>
 			<audio id="click-sound" src="audio/click.ogg"></audio>
 			<img id="city" src="assets/background.jpg">
 			<audio id="background" src="assets/music/background.mp3" preload="auto"></audio>
-
+<!-- 
 			<img id="photoA1" src="assets/photos/photo-1.jpg">
 			<img id="photoA2" src="assets/photos/photo-2.jpg">
 			<img id="photoA3" src="assets/photos/photo-3.jpg">
@@ -43,10 +44,25 @@
 			<img id="photoB5" src="assets/photos/photo-14.jpg">
 			<img id="photoB6" src="assets/photos/photo-15.jpg">
 			<img id="photoB7" src="assets/photos/photo-16.jpg">
-			<img id="photoB8" src="assets/photos/photo-17.jpg">
+			<img id="photoB8" src="assets/photos/photo-17.jpg"> -->
 
-			<a-asset-item id="box-obj" src="assets/scene.obj"></a-asset-item>
-			<a-asset-item id="box-mtl" src="assets/scene.mtl"></a-asset-item>
+			<a-asset-item id="scene-obj" src="assets/photoshoptest.obj"></a-asset-item>
+			<a-asset-item id="scene-mtl" src="assets/photoshoptest.mtl"></a-asset-item>
+			<!-- <a-asset-item id="scene-obj" src="assets/scene.obj"></a-asset-item>
+			<a-asset-item id="scene-mtl" src="assets/scene.mtl"></a-asset-item> -->
+
+			<!-- <a-asset-item id="pillar-obj" src="assets/pillar.obj"></a-asset-item> -->
+			<!-- <a-asset-item id="pillar-mtl" src="assets/pillar.mtl"></a-asset-item> -->
+			<!-- <img id="pillar-normal" src="assets/pillar-normal.png"> -->
+			<img id="pillar-texture" src="assets/pillar-texture.jpg"/>
+
+
+			<a-asset-item id="pillar-obj" src="assets/fancypillar.obj"></a-asset-item>
+			<a-asset-item id="pillar-mtl" src="assets/fancypillar.mtl"></a-asset-item>
+			<img id="pillar-normal" src="assets/fancypillar-normal.png" />
+
+
+			<img id="person" src="assets/person.png">
 
 		</a-assets>
 
@@ -54,83 +70,98 @@
 		<template id="portal" type="text/html">
 			<a-cylinder radius="0.5" height="2.0" material="transparent:true; opacity:0.2" color="#ff00ff"></a-cylinder>
 			<a-sphere material="transparent:true; opacity:0.5" radius="0.2" color="#00FFff">
-				<a-animation easing="ease-out" repeat="indefinite" attribute="scale" dur="1500" from="0.1 0.1 0.1" to="1 1 1"></a-animation>
-				<a-animation easing="ease-out" repeat="indefinite" attribute="opacity" dur="1500" from="1" to="0"></a-animation>
+				<a-animation easing="ease-out" repeat="indefinite" attribute="scale" dur="1500" from="0.1 0.1 0.1"
+					to="1 1 1"></a-animation>
+				<a-animation easing="ease-out" repeat="indefinite" attribute="opacity" dur="1500" from="1" to="0">
+				</a-animation>
 			</a-sphere>
 		</template>
 
-
-
 		<template id="photowall" type="text/html">
-			<a-plane position="2.164 2 -0.274" material="side: double;" rotation="0 30 0" width="5" height="4" color="#E0E0E0">
+			<a-plane position="2.164 2 -0.274" material="side: double;" rotation="0 30 0" width="5" height="4"
+				color="#E0E0E0">
 				<!-- <a-entity light="type: spot; intensity: 0.98; distance: 8.16; decay: 0.49; ; penumbra: 0.98; shadowBias: 0.51" position="0.2 0.8 2" rotation="-20 0 0"></a-entity> -->
-				<a-box move-to-portal="cameraId:#camera; portalId:#jump-X-${index}" material="src:${image2}; metalness:1" geometry="depth:0.1;height:2;width:3"></a-box>
+				<a-box move-to-portal="cameraId:#camera; portalId:#jump-X-${index}"
+					material="src:${image2}; metalness:1" geometry="depth:0.1;height:2;width:3"></a-box>
 
 				<a-entity id="jump-X-${index}" position="0.4 0 2">
 					<!-- <a-sphere radius="0.05" color="magenta"></a-sphere> -->
 				</a-entity>
 
 			</a-plane>
-
-			<a-plane position="-2.164 2 -0.274" material="side: double;" rotation="0 -30 0" width="5" height="4" color="#E0E0E0">
+			<a-plane position="-2.164 2 -0.274" material="side: double;" rotation="0 -30 0" width="5" height="4"
+				color="#E0E0E0">
 				<!-- <a-entity light="type: spot; intensity: 0.98; distance: 8.16; decay: 0.49; ; penumbra: 0.98; shadowBias: 0.51" position="0.2 0.8 2" rotation="-20 0 0"></a-entity> -->
-				<a-box move-to-portal="cameraId:#camera; portalId:#jump-Y-${index}" material="src:${image1}; metalness:1" geometry="depth:0.1;height:2;width:3"></a-box>
+				<a-box move-to-portal="cameraId:#camera; portalId:#jump-Y-${index}"
+					material="src:${image1}; metalness:1" geometry="depth:0.1;height:2;width:3"></a-box>
 
 				<a-entity id="jump-Y-${index}" position="0.4 0 2">
 					<!-- <a-sphere radius="0.05" color="magenta"></a-sphere> -->
 				</a-entity>
 
 			</a-plane>
-
-
-			<a-entity light="type: point; intensity: 1; distance: 5; penumbra: 1" position="-3.291 3.000 1.696" rotation="-40 0 0"></a-entity>
-
-
-
-
+			<a-entity light="type: point; intensity: 1; distance: 5; penumbra: 1" position="-3.291 3.000 1.696"
+				rotation="-40 0 0"></a-entity>
 		</template>
-
-
-
-
+ 
 		<template id="click-area" type="text/html">
-			<a-sphere material="color:red;  " event-set__enter="_event: mouseenter; color: green;" event-set__leave="_event: mouseleave; color: red;"
-			 move-to-portal="cameraId:#camera; portalId:${destination}" radius="0.3"></a-sphere>
+			<a-sphere material="color:red;  " event-set__enter="_event: mouseenter; color: green;"
+				event-set__leave="_event: mouseleave; color: red;"
+				move-to-portal="cameraId:#camera; portalId:${destination}" radius="0.3"></a-sphere>
 		</template>
-
-
-
-
-		<a-box height="1" width="1" depth="1" rotation="0 0 0" position="0 0 0" color="red" material="side:front">
-		</a-box> 
-
-		
+ 
 		<!-- <a-entity id="ambient" light="type:ambient;intensity:0.26;distance:6.02;penumbra:0.37" position="0 0 -10" rotation="-90 0 0"></a-entity> -->
-		<a-entity obj-model="obj: #box-obj; mtl: #box-mtl" shadow=""></a-entity>
+
+<a-entity position="0 0 -2.5">
+
+		<a-entity id="room" obj-model="obj: #scene-obj; " shadow=""></a-entity>
 		
-		<a-entity id="spot" light="castShadow: true; type: spot; intensity: 4; distance: 10; penumbra: 1" position="0 5.8 -19" rotation="-90 0 0">
-				<a-animation attribute="light.intensity" dur="10000" from="0" to="3" direction="alternate" repeat="indefinite"></a-animation>
-		</a-entity>
-		<a-entity id="point1" light="castShadow: true; type: point; intensity: 3; distance: 20;" position="10 5 10" rotation="-90 0 0">
-			<a-animation attribute="position" dur="10000" from="10 5 10" to="10 5 -0" direction="alternate" repeat="indefinite"></a-animation>
-		</a-entity>
-		<a-entity id="point2" light="castShadow: true; type: point; intensity: 3; distance: 20;" position="-10 5 10" rotation="-90 0 0">
-			<a-animation attribute="position" dur="10000" from="-10 5 10" to="-10 5 -0" direction="alternate" repeat="indefinite"></a-animation>
+		<a-entity id="person-obj" 
+			scale="0.730 1 1"
+			position="0.194 1.059 0.000" shadow="" geometry="depth:0.1" material="src:#person;alphaTest:0.78"></a-entity>
+
+
+			
+			
+		<!-- <a-entity id="pillar" position="0 1 -20.6" material="src: #pillar-texture; normalMap: #pillar-normal"
+			obj-model="obj: #pillar-obj;;" shadow="">
+			<a-animation attribute="rotation" dur="10000" from="0 0 0" to="0 360 0" direction="forward"
+				repeat="indefinite" easing="linear"></a-animation>
+		</a-entity> -->
+
+		<a-entity id="spot" light="castShadow: true; type: spot; intensity: 4; distance: 10; penumbra: 1"
+			position="0 2.62924 -13.3921" rotation="0.01 0 180">
+			<a-animation attribute="light.intensity" dur="10000" from="0" to="3" direction="alternate"
+				repeat="indefinite"></a-animation>
 		</a-entity>
 
-		
+	 
+		<a-entity id="softbox" light="castShadow:true;type:spot;distance:7.38;angle:50;decay:2.59;penumbra:1" position="-1.37014 1.34239 0.57814" rotation="-38.512504115308545 -73.94650599737918 172.0512044686544">
+			</a-entity>
+
+			<a-entity id="zon" light="castShadow:true" position="-10 4.5 -6">
+					<a-animation attribute="position" 		 easing="linear" dur="60000" from="-10 7 -6" to="10 2 -6" direction="alternate" repeat="indefinite"></a-animation>
+					<a-animation attribute="light.color" 	 easing="linear" dur="60000" from="#fffce4" to="#ffbe78" direction="alternate" repeat="indefinite"></a-animation>
+					<a-animation attribute="light.intensity" easing="linear" dur="60000" from="1" to="0.7" direction="alternate" repeat="indefinite"></a-animation>
+			</a-entity>
+	</a-entity>
+
 		<!-- camera -->
 		<!-- <a-entity automove> -->
-				<a-camera height="1.7" camera="fov:35;" position="0 1.6 20" rotation="-3.666929888837269 -2.2918311805232805 0" look-controls="pointerLockEnabled:false" wasd-controls="" data-aframe-inspector-original-camera="">
-						<a-entity light="type:point;intensity:1;distance:10;penumbra:1" position="" rotation=""></a-entity>
-				<!-- <a-box  position="0 0 -3" color="#ff0000" ></a-box>
+		
+			<!-- De camera moet op  0 0 0 blijven staan, omdat switchen naar VR de positie reset -->
+			<a-entity camera="userHeight:1.3; fov:73.73" look-controls wasd-controls  position="0 1.3 0" rotation="-6.6463104235175505 -0.35918311805230981 0"
+			>
+			<a-entity light="type:point;intensity:1;distance:10;penumbra:1" position="" rotation=""></a-entity>
+			<!-- <a-box  position="0 0 -3" color="#ff0000" ></a-box>
 				<a-entity cursor="fuse: true;" position="0 0 -1" scale="0.05" geometry="primitive: ring; radiusOuter: 0.004; radiusInner: 0.002; "
 				 material="color: magenta; shader: flat">
 					<a-animation begin="cursor-fusing" easing="ease-in" attribute="scale" dur="1500" fill="backwards" from="1 1 1" to="0.1 0.1 0.1"></a-animation>
 					<a-animation begin="click" easing="ease-in" attribute="scale" dur="150" fill="forwards" from="0.1 0.1 0.1" to="1 1 1"></a-animation>
 				</a-entity> -->
 
-			</a-camera>
+			</a-entity>	
+	</a-entity>
 
 		<a-entity sound="src: #background"></a-entity>
 
