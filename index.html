@@ -9,11 +9,11 @@
 	<script src="scripts/aframe-template-component.min.js"></script>
 	<script src="scripts/components/automove.js"></script>
 
-	
+
 	<script src="scripts/aframe-curve-component.min.js"></script>
 	<script src="scripts/aframe-alongpath-component.min.js"></script>
-	
-	
+
+
 	<!-- <script src="scripts/components/move-to-portal.js"></script> -->
 	<!-- <script src="scripts/aframe-inspector.min.js"></script> -->
 
@@ -28,16 +28,16 @@
 <body>
 	<section class="intro">
 		<div class="welcome">
-			<p> Tap to start! </p>	
+			<p> Tap to start! </p>
 			<button class="welcome__startbutton">Start</button>
-	</div>
+		</div>
 	</section>
-	
+
 	<section class="countdown">
 		<div class="counter">
-		<span class="counter__left counter__timer">10</span>
-		<span class="counter__right counter__timer">10</span>
-	</div>
+			<span class="counter__left counter__timer">10</span>
+			<span class="counter__right counter__timer">10</span>
+		</div>
 	</section>
 
 	<section class="scene">
@@ -50,23 +50,29 @@
 				<audio id="click-sound" src="audio/click.ogg"></audio>
 				<img id="city" src="assets/background.jpg">
 				<audio id="music-background" src="assets/music/background.mp3" preload="auto"></audio>
-			   
+
 				<a-asset-item id="scene-obj" src="assets/greek-temple.obj"></a-asset-item>
 				<a-asset-item id="scene-mtl" src="assets/greek-temple.mtl"></a-asset-item>
 
 				<img id="person" src="assets/person.png">
-
 			</a-assets>
 
-			 
 
-			<a-curve id="track1">
-					<a-curve-point position="-2 2 -3"></a-curve-point>
-					<a-curve-point position="0 1 -3" rotation="0 90 0"></a-curve-point>
-					<a-curve-point position="2 2 -3" rotation="0 0 90"></a-curve-point>
-				  </a-curve>
-				  
-				  <a-box alongpath="curve: #track1;loop:true; rotate:true"></a-box>
+
+			<a-curve id="track1" closed="true">
+					<a-curve-point position="12.36152 17.28186 29.57721" rotation="" curve-point=""></a-curve-point>
+					<a-curve-point position="11.74189 7.27413 27.28939" rotation="" curve-point=""></a-curve-point>
+					<a-curve-point position="3.47037 0.02614 23.87661" rotation="" curve-point=""></a-curve-point>
+	
+					<a-curve-point position="-0.0079 3.51987 15.15118" rotation="" curve-point=""></a-curve-point>
+					<a-curve-point position="-0.0079 2.37483 4.86584" rotation="" curve-point=""></a-curve-point>
+					<a-curve-point position="-0.0079 3.47738 -9.93925" rotation="" curve-point=""></a-curve-point>
+					<a-curve-point position="-0.0079 1.75956 -12.86263" rotation="" curve-point=""></a-curve-point>
+			</a-curve>
+
+			<a-draw-curve curveref="#track1" material="shader: line; color: blue;"></a-draw-curve>
+			<!-- <a-box alongpath="curve: #track1; dur: 5000; loop:true; rotate:true"></a-box> -->
+
 
 
 			<!-- <a-entity id="ambient" light="type:ambient;intensity:0.26;distance:6.02;penumbra:0.37" position="0 0 -10" rotation="-90 0 0"></a-entity> -->
@@ -106,10 +112,12 @@
 			<!-- <a-entity automove> -->
 
 			<!-- De camera moet op  0 0 0 blijven staan, omdat switchen naar VR de positie reset -->
-			<a-entity 
-				alongpath="curve: #track1;loop:true; rotate:true"
-				camera="userHeight:1.6; fov:73.73" look-controls wasd-controls position="0 1.6 0"
-				rotation="-6.6463104235175505 -0.35918311805230981 0">
+			<!-- rotation="-6.6463104235175505 -0.35918311805230981 0" -->
+			<a-entity camera="userHeight:1.6; fov:73.73" look-controls wasd-controls position="0 1.6 0"
+				alongpath="curve: #track1; delay: 5000; loop:false; rotation:true; dur: 30000"
+
+				rotation="0 90 0" 
+				>
 				<a-entity light="type:point;intensity:1;distance:10;penumbra:1" position="" rotation=""></a-entity>
 				<!-- <a-box  position="0 0 -3" color="#ff0000" ></a-box>
 				<a-entity cursor="fuse: true;" position="0 0 -1" scale="0.05" geometry="primitive: ring; radiusOuter: 0.004; radiusInner: 0.002; "

@@ -1,5 +1,5 @@
 const Settings = {
-    DEFAULT_COUNTDOWN: 1
+    DEFAULT_COUNTDOWN: 5
 };
 
 const Selectors = {
