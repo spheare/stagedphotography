@@ -1,0 +1,71 @@
+html,
+body {
+	width: 100vw;
+	height: 100vh;
+	margin: 0;
+	padding: 0;
+	background: black;
+	color: white;
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana,
+		sans-serif;
+}
+.intro {
+    display: block;
+    padding: 50px;
+}
+.countdown {
+	display: none;
+}
+.scene {
+	display: none;
+}
+
+.state-countdown .intro {
+	display: none;
+}
+.state-countdown .countdown {
+	display: block;
+}
+.state-countdown .scene {
+	display: none;
+}
+
+.state-running .intro {
+	display: none;
+}
+.state-running .countdown {
+	display: none;
+}
+.state-running .scene {
+	display: block;
+}
+
+.welcome {
+	font-size: 64px;
+	width: 50%;
+	margin: 0 auto;
+	text-align: center;
+}
+.welcome__startbutton {
+	border: 1px solid white;
+	padding: 30px;
+	font-size: 64px;
+}
+
+.counter {
+	display: flex;
+	font-size: 48;
+}
+.counter__left,
+.counter__right {
+	flex: 1 1 auto;
+	width: 100%;
+	height: 100%;
+}
+
+.counter__left {
+	border-right: 1px solid white;
+}
+.counter__right {
+	border-left: 1px solid white;
+}
