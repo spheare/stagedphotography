@@ -11,9 +11,14 @@ body {
 }
 .intro {
     display: block;
-    padding: 50px;
+	padding: 50px;
 }
 .countdown {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
 	display: none;
 }
 .scene {
@@ -47,9 +52,26 @@ body {
 	text-align: center;
 }
 .welcome__startbutton {
-	border: 1px solid white;
+	color:black;
+	background: white;
+	border: 2px solid transparent;
 	padding: 30px;
 	font-size: 64px;
+	display: none;
+}
+.welcome__startbutton:active {
+	background: black;
+	color: white;
+	border: 2px solid white;
+}
+.welcome__startbutton--visible {
+	display: block;
+}
+.welcome__loadtext {
+	display: none;
+}
+.welcome__loadtext--visible {
+	display: block;
 }
 
 .counter {

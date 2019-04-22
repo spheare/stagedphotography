@@ -1,18 +1,22 @@
 <html>
 
 <head>
-	<script defer async src="scripts/main.js"></script>
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="viewport" content=" user-scalable = no, initial-scale = 1.0">
+
+	<script defer async src=" scripts/main.js"> </script>
 	<link rel="stylesheet" href="css/main.css" />
 	<script src="scripts/webvr-polyfill.js"></script>
 	<script src="scripts/aframe.min.js"></script>
 	<script src="scripts/aframe-eventset-component.min.js"></script>
 	<script src="scripts/aframe-template-component.min.js"></script>
 	<script src="scripts/components/automove.js"></script>
-
+	<script src="scripts/components/model-load-event.js"></script>
 
 	<script src="scripts/aframe-curve-component.min.js"></script>
 	<script src="scripts/aframe-alongpath-component.min.js"></script>
-
 
 	<!-- <script src="scripts/components/move-to-portal.js"></script> -->
 	<!-- <script src="scripts/aframe-inspector.min.js"></script> -->
@@ -28,70 +32,72 @@
 <body>
 	<section class="intro">
 		<div class="welcome">
-			<p> Tap to start! </p>
-			<button class="welcome__startbutton">Start</button>
+			<p class="welcome__loadtext welcome__loadtext--visible">Bezig met laden...</p>
+			<button class="welcome__startbutton">Tap to Start</button>
 		</div>
 	</section>
 
 	<section class="countdown">
 		<div class="counter">
-			<span class="counter__left counter__timer">10</span>
-			<span class="counter__right counter__timer">10</span>
+			<span class="counter__left">
+				insert into headset
+				<span class="counter__timer">10</span>
+			</span>
+
+			</span>
+			<span class="counter__right">
+				insert into headset
+				<span class="counter__timer">10</span>
+			</span>
+
+			</span>
 		</div>
 	</section>
 
 	<section class="scene">
-		<a-scene background="color:#ECECEC">
+		<a-scene background="color:#ECECEC" stats>
 			<a-animation attribute="background.color" easing="linear" dur="60000" from="#fffce4" to="#ffbe78"
 				direction="alternate" repeat="indefinite"></a-animation>
 
 			<!-- assets -->
 			<a-assets>
-				<audio id="click-sound" src="audio/click.ogg"></audio>
-				<img id="city" src="assets/background.jpg">
-				<audio id="music-background" src="assets/music/background.mp3" preload="auto"></audio>
+				<audio id="music-background" src="assets/music/background.mp3" loop="true" preload="auto"></audio>
 
-				<a-asset-item id="scene-obj" src="assets/greek-temple.obj"></a-asset-item>
-				<a-asset-item id="scene-mtl" src="assets/greek-temple.mtl"></a-asset-item>
+				<a-asset-item id="scene-obj" src="assets/models/greek-temple.obj"></a-asset-item>
+				<a-asset-item id="scene-mtl" src="assets/models/greek-temple.mtl"></a-asset-item>
 
-				<img id="person" src="assets/person.png">
+				<img id="person" src="assets/images/person.png">
 			</a-assets>
 
+			<a-curve id="cameratrack" closed="false">
+				<a-curve-point position="15 25 33"></a-curve-point>
+				<a-curve-point position="12 15 29"></a-curve-point>
+				<a-curve-point position="11 7.0 27"></a-curve-point>
+				<a-curve-point position="3.5 0.25 23"></a-curve-point>
 
-
-			<a-curve id="track1" closed="true">
-					<a-curve-point position="12.36152 17.28186 29.57721" rotation="" curve-point=""></a-curve-point>
-					<a-curve-point position="11.74189 7.27413 27.28939" rotation="" curve-point=""></a-curve-point>
-					<a-curve-point position="3.47037 0.02614 23.87661" rotation="" curve-point=""></a-curve-point>
-	
-					<a-curve-point position="-0.0079 3.51987 15.15118" rotation="" curve-point=""></a-curve-point>
-					<a-curve-point position="-0.0079 2.37483 4.86584" rotation="" curve-point=""></a-curve-point>
-					<a-curve-point position="-0.0079 3.47738 -9.93925" rotation="" curve-point=""></a-curve-point>
-					<a-curve-point position="-0.0079 1.75956 -12.86263" rotation="" curve-point=""></a-curve-point>
+				<a-curve-point position="-3 2.5 15.15118"></a-curve-point>
+				<a-curve-point position="2 1.4 4.8"></a-curve-point>
+				<a-curve-point position="-0.0079 2.5 -10"></a-curve-point>
+				<a-curve-point position="-0.0079 0 -12.86"></a-curve-point>
 			</a-curve>
 
-			<a-draw-curve curveref="#track1" material="shader: line; color: blue;"></a-draw-curve>
-			<!-- <a-box alongpath="curve: #track1; dur: 5000; loop:true; rotate:true"></a-box> -->
-
-
+			<a-draw-curve curveref="#cameratrack" material="shader: line; color: blue;"></a-draw-curve>
+			<!-- <a-box alongpath="curve: #cameratrack; dur: 5000; loop:true; rotate:true"></a-box> -->
 
 			<!-- <a-entity id="ambient" light="type:ambient;intensity:0.26;distance:6.02;penumbra:0.37" position="0 0 -10" rotation="-90 0 0"></a-entity> -->
 
 			<a-entity position="0 0 -2.5">
 
-				<a-entity id="room" obj-model="obj: #scene-obj; " shadow=""></a-entity>
+				<a-entity id="room" model-load-event obj-model="obj: #scene-obj; " shadow=""></a-entity>
 
 				<a-entity id="person-obj" scale="0.730 1 1" position="0.194 1.059 0.000" shadow="" geometry="depth:0.1"
 					material="src:#person;alphaTest:0.78"></a-entity>
-
-
 
 				<a-entity id="spot" light="castShadow: true; type: spot; intensity: 4; distance: 10; penumbra: 1"
 					position="0 2.62924 -13.3921" rotation="0.01 0 180">
 					<a-animation attribute="light.intensity" dur="10000" from="0" to="3" direction="alternate"
 						repeat="indefinite"></a-animation>
 				</a-entity>
-
 
 				<a-entity id="softbox" light="castShadow:true;type:spot;distance:7.38;angle:50;decay:2.59;penumbra:1"
 					position="-1.37014 1.34239 0.57814"
@@ -109,15 +115,13 @@
 			</a-entity>
 
 			<!-- camera -->
-			<!-- <a-entity automove> -->
 
-			<!-- De camera moet op  0 0 0 blijven staan, omdat switchen naar VR de positie reset -->
-			<!-- rotation="-6.6463104235175505 -0.35918311805230981 0" -->
-			<a-entity camera="userHeight:1.6; fov:73.73" look-controls wasd-controls position="0 1.6 0"
-				alongpath="curve: #track1; delay: 5000; loop:false; rotation:true; dur: 30000"
-
-				rotation="0 90 0" 
-				>
+			<!-- rig voor VR camera te helpen moven. controlled door camera track-->
+			<a-entity alongpath="curve: #cameratrack; resetonplay:true; loop:false; rotation:true; dur: 30000">
+				<!-- De camera moet op  0 H 0 blijven staan, omdat switchen naar VR de positie reset. Enkel H is gebruikt in non-vr mode voor hoogte -->
+				<a-entity camera="userHeight:1.6; fov:73.73" look-controls wasd-controls rotation="0 90 0"
+					position="0 1.7 0">
+				</a-entity>
 				<a-entity light="type:point;intensity:1;distance:10;penumbra:1" position="" rotation=""></a-entity>
 				<!-- <a-box  position="0 0 -3" color="#ff0000" ></a-box>
 				<a-entity cursor="fuse: true;" position="0 0 -1" scale="0.05" geometry="primitive: ring; radiusOuter: 0.004; radiusInner: 0.002; "
@@ -126,7 +130,6 @@
 					<a-animation begin="click" easing="ease-in" attribute="scale" dur="150" fill="forwards" from="0.1 0.1 0.1" to="1 1 1"></a-animation>
 				</a-entity> -->
 
-			</a-entity>
 			</a-entity>
 
 			<a-entity sound="src:#music-background"></a-entity>
