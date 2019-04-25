@@ -6,14 +6,17 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 	<meta name="viewport" content=" user-scalable = no, initial-scale = 1.0">
 
-	<script defer async src=" scripts/main.js"> </script>
 	<link rel="stylesheet" href="css/main.css" />
+	<script src="scripts/main.js"> </script>
 	<script src="scripts/webvr-polyfill.js"></script>
 	<script src="scripts/aframe.min.js"></script>
 	<script src="scripts/aframe-eventset-component.min.js"></script>
 	<script src="scripts/aframe-template-component.min.js"></script>
+	<script src="scripts/aframe-gradient-sky.js"></script>
 	<script src="scripts/components/automove.js"></script>
+	<script src="scripts/components/wireframe-shader.js"></script>
 	<script src="scripts/components/model-load-event.js"></script>
+	<script src="scripts/components/replace-material.js"></script>
 
 	<script src="scripts/aframe-curve-component.min.js"></script>
 	<script src="scripts/aframe-alongpath-component.min.js"></script>
@@ -29,10 +32,14 @@
 
 </head>
 
-<body>
+<body class="">
 	<section class="intro">
 		<div class="welcome">
-			<p class="welcome__loadtext welcome__loadtext--visible">Bezig met laden...</p>
+			<p class="welcome__loadtext welcome__loadtext--visible">Bezig met laden…</p>
+			<ul class="welcome__loadstatus"></ul>
+			<div class="welcome__spinner">
+			<div class="lds-ripple"><div></div><div></div></div>
+		</div>
 			<button class="welcome__startbutton">Tap to Start</button>
 		</div>
 	</section>
@@ -40,13 +47,14 @@
 	<section class="countdown">
 		<div class="counter">
 			<span class="counter__left">
-				insert into headset
+				<span class="counter__turn">Please turn your device sideways</span>
+				<span class="counter__text">insert the phone into your VR headset</span>
 				<span class="counter__timer">10</span>
 			</span>
 
 			</span>
 			<span class="counter__right">
-				insert into headset
+				<span class="counter__text">insert the phone into your VR headset</span>
 				<span class="counter__timer">10</span>
 			</span>
 
@@ -55,17 +63,18 @@
 	</section>
 
 	<section class="scene">
-		<a-scene background="color:#ECECEC" stats>
-			<a-animation attribute="background.color" easing="linear" dur="60000" from="#fffce4" to="#ffbe78"
-				direction="alternate" repeat="indefinite"></a-animation>
+		<a-scene  stats>
+				<a-entity id="sky" sun-position-setter="sunSrc: #zon" geometry="primitive: sphere; radius: 100" material="shader: sky; side: back" >
+
+					  </a-entity>
+
+			<!-- <a-animation attribute="background.color" easing="linear" dur="60000" from="#fffce4" to="#ffbe78"
+				direction="alternate" repeat="indefinite"></a-animation> -->
 
 			<!-- assets -->
 			<a-assets>
-				<audio id="music-background" src="assets/music/background.mp3" loop="true" preload="auto"></audio>
-
-				<a-asset-item id="scene-obj" src="assets/models/greek-temple.obj"></a-asset-item>
-				<a-asset-item id="scene-mtl" src="assets/models/greek-temple.mtl"></a-asset-item>
-
+				<a-asset-item id="scene-glb" crossOrigin="anonymous" src="assets/models/greek-temple.glb"></a-asset-item>
+				<audio id="music-background" src="assets/music/background.mp3" loop="true" autoplay preload="auto"></audio> <!-- autoplay is needed for iOS to precache but will not actually autoplay-->
 				<img id="person" src="assets/images/person.png">
 			</a-assets>
 
@@ -88,10 +97,15 @@
 
 			<a-entity position="0 0 -2.5">
 
-				<a-entity id="room" model-load-event obj-model="obj: #scene-obj; " shadow=""></a-entity>
+				<!-- <a-entity id="room" model-load-event obj-model="obj: #scene-obj; " shadow=""></a-entity> -->
+				<a-gltf-model
 
-				<a-entity id="person-obj" scale="0.730 1 1" position="0.194 1.059 0.000" shadow="" geometry="depth:0.1"
-					material="src:#person;alphaTest:0.78"></a-entity>
+				replace-materials id="room" model-load-event src="#scene-glb" shadow
+				material="shader: wireframe; "
+				></a-gltf-model>
+
+				<a-plane id="person-obj" scale="0.730 1 1" position="0.194 1.059 0.000" shadow="" geometry="depth:0.1"
+					material="src:#person;alphaTest:0.78; shader: wireframe"></a-plane>
 
 				<a-entity id="spot" light="castShadow: true; type: spot; intensity: 4; distance: 10; penumbra: 1"
 					position="0 2.62924 -13.3921" rotation="0.01 0 180">
@@ -104,15 +118,36 @@
 					rotation="-38.512504115308545 -73.94650599737918 172.0512044686544">
 				</a-entity>
 
-				<a-entity id="zon" light="castShadow:true" position="-10 4.5 -6">
-					<a-animation attribute="position" easing="linear" dur="60000" from="-10 7 -6" to="10 2 -6"
-						direction="alternate" repeat="indefinite"></a-animation>
-					<a-animation attribute="light.color" easing="linear" dur="60000" from="#fffce4" to="#ffbe78"
-						direction="alternate" repeat="indefinite"></a-animation>
-					<a-animation attribute="light.intensity" easing="linear" dur="60000" from="1" to="0.7"
-						direction="alternate" repeat="indefinite"></a-animation>
-				</a-entity>
-			</a-entity>
+
+				<a-entity id="ambient"
+				light="castShadow:false; type: spot; intensity: 0.4; color: #f0f; distance: 1; penumbra: 1; angle: 120; decay: 0"
+				position="0.42583 1.54297 1.4604" rotation="180 180 0"
+				animation__ambientcolor="property: light.color; type:color;  easing:linear; from: #ffffee ; to: #ffffff ; loop: true; dur: 50000"
+				animation__ambientstrength="property: light.intensity; dir:alternate;  easing:linear;  from: 0.2; to: 1.2 ; loop: true; dur: 25000">
+
+
+
+<!-- SUN RIG -->-->
+<a-entity position="0 0 -10"
+
+animation__sunrot="property: object3D.rotation; easing:linear;  from: 0 360 360 ; to: 0 180 180; loop: true; dur: 50000">
+
+
+<a-entity animation__sunheight="property: object3D.rotation.z; easing:linear;  from: 400 ; to: 180; loop: true; dur: 50000">
+
+<a-entity id="zon" position="-10 0 0"
+
+	light="castShadow:true;shadowMapHeight:1024;shadowMapWidth:1024"
+
+	animation__shader="property: object3D.rotation.y; easing:linear;  from: -10 ; to: 190; loop: true; dur: 50000"
+	animation__suncolor="property: light.color;  type:color;  easing:linear; from: #fffce4 ; to: #ffbe78 ; loop: true; dur: 50000"
+	animation__sunintensity="property: light.intensity;   easing:linear; dir:alternate; from: 0; to: 2 ; loop: true; dur: 25000">
+	</a-entity>
+</a-entity>
+</a-entity>
+
+
+</a-entity>
 
 			<!-- camera -->
 
