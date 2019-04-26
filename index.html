@@ -4,7 +4,9 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-	<meta name="viewport" content=" user-scalable = no, initial-scale = 1.0">
+	<!-- <meta name="viewport" content=" user-scalable = no, initial-scale = 1.0"> -->
+	<meta name="viewport" content="width=device-width, height=device-height, minimal-ui">
+
 
 	<link rel="stylesheet" href="css/main.css" />
 	<script src="scripts/main.js"> </script>
@@ -101,11 +103,11 @@
 				<a-gltf-model
 
 				replace-materials id="room" model-load-event src="#scene-glb" shadow
-				material="shader: wireframe; "
+
 				></a-gltf-model>
 
 				<a-plane id="person-obj" scale="0.730 1 1" position="0.194 1.059 0.000" shadow="" geometry="depth:0.1"
-					material="src:#person;alphaTest:0.78; shader: wireframe"></a-plane>
+					material="src:#person;alphaTest:0.78;"></a-plane>
 
 				<a-entity id="spot" light="castShadow: true; type: spot; intensity: 4; distance: 10; penumbra: 1"
 					position="0 2.62924 -13.3921" rotation="0.01 0 180">

@@ -1,7 +1,10 @@
-const DEBUG = document.location.href.indexOf('127.0.0.1') >= 0;
+const DEBUG = document.location.href.indexOf('127.0.0.1') >= 0 ||
+document.location.href.indexOf('localhost') >= 0 ||
+document.location.href.indexOf('192.168') >= 0 ||
+document.location.href.indexOf('10.0.0') >= 0;
 
 const Settings = {
-	DEFAULT_COUNTDOWN: DEBUG ? 0 : 10
+	DEFAULT_COUNTDOWN: DEBUG ? 0 : 3
 };
 
 const Selectors = {
