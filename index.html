@@ -2,176 +2,204 @@
 <html>
 
 <head>
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-	<meta name="viewport" content="width=device-width, height=device-height, minimal-ui,  user-scalable = no, initial-scale = 1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, height=device-height, minimal-ui,  user-scalable = no, initial-scale = 1.0" />
 
-	<title>Staged Photography</title>
-	<link rel="stylesheet" href="css/main.css" />
-	<script src="scripts/main.js"> </script>
-	<script src="scripts/webvr-polyfill.js"></script>
+    <title>Staged Photography</title>
+    <link rel="stylesheet" href="css/main.css" />
+
+
+    <script src="scripts/main.js"></script>
+    <script src="scripts/webvr-polyfill.js"></script>
 	<script src="scripts/aframe.min.js"></script>
-	<script src="scripts/aframe-eventset-component.min.js"></script>
-	<script src="scripts/aframe-template-component.min.js"></script>
-	<script src="scripts/aframe-gradient-sky.js"></script>
-	<script src="scripts/components/automove.js"></script>
-	<script src="scripts/components/wireframe-shader.js"></script>
-	<script src="scripts/components/model-load-event.js"></script>
+	<!-- <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script> -->
+
+    <!-- <script src="scripts/aframe-eventset-component.min.js"></script> -->
+    <!-- <script src="scripts/aframe-template-component.min.js"></script> -->
+
+    <script src="scripts/components/automove.js"></script>
+    <script src="scripts/components/wireframe-shader.js"></script>
+    <script src="scripts/components/model-load-event.js"></script>
 	<script src="scripts/components/replace-material.js"></script>
+	<script src="scripts/components/fixvec3animation.js"></script>
 
-	<script src="scripts/aframe-curve-component.min.js"></script>
-	<script src="scripts/aframe-alongpath-component.min.js"></script>
+    <script src="scripts/aframe-curve-component.min.js"></script>
+    <script src="scripts/aframe-alongpath-component.min.js"></script>
+	<script src="scripts/aframe-environment.js"></script>
 
-	<!-- <script src="scripts/components/move-to-portal.js"></script> -->
-	<!-- <script src="scripts/aframe-inspector.min.js"></script> -->
+    <!-- <script src="scripts/components/move-to-portal.js"></script> -->
+    <!-- <script src="scripts/aframe-inspector.min.js"></script> -->
 
-	<!-- <script src="https://unpkg.com/aframe-inspector@0.8.x/dist/aframe-inspector.min.js"></script> -->
-	<!-- <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.13.1/dist/aframe-extras.min.js"></script> -->
-	<!-- <script src="https://unpkg.com/aframe-environment-component@1.0.0/dist/aframe-environment-component.min.js"></script> -->
-	<!-- <script src="https://unpkg.com/aframe-animation-component@3.2.1/dist/aframe-animation-component.min.js"></script> -->
-	<!-- <script src="gpoly.js"></script> -->
+    <!-- <script src="https://unpkg.com/aframe-inspector@0.8.x/dist/aframe-inspector.min.js"></script> -->
+    <!-- <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.13.1/dist/aframe-extras.min.js"></script> -->
+    <!-- <script src="https://unpkg.com/aframe-environment-component@1.0.0/dist/aframe-environment-component.min.js"></script> -->
+    <!-- <script src="https://unpkg.com/aframe-animation-component@3.2.1/dist/aframe-animation-component.min.js"></script> -->
+    <!-- <script src="gpoly.js"></script> -->
 
 </head>
 
 <body class="">
-	<section class="intro">
-		<div class="welcome">
-			<p class="welcome__loadtext welcome__loadtext--visible">Bezig met laden…</p>
-			<ul class="welcome__loadstatus"></ul>
-			<div class="welcome__spinner">
-			<div class="lds-ripple"><div></div><div></div></div>
-		</div>
-			<button class="welcome__startbutton">Tap to Start</button>
-		</div>
-	</section>
+    <section class="intro">
+        <div class="welcome">
+            <p class="welcome__loadtext welcome__loadtext--visible">Bezig met laden…</p>
+            <ul class="welcome__loadstatus"></ul>
+            <div class="welcome__spinner">
+                <div class="lds-ripple">
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <button class="welcome__startbutton">Tap to Start</button>
+        </div>
+    </section>
 
-	<section class="countdown">
-		<div class="counter">
-			<span class="counter__left">
+    <section class="countdown">
+        <div class="counter">
+            <span class="counter__left">
 				<span class="counter__turn">Please turn your device sideways</span>
+            <span class="counter__text">insert the phone into your VR headset</span>
+            <span class="counter__timer">10</span>
+            </span>
+
+            <span class="counter__right">
 				<span class="counter__text">insert the phone into your VR headset</span>
-				<span class="counter__timer">10</span>
-			</span>
+            <span class="counter__timer">10</span>
+            </span>
 
-			</span>
-			<span class="counter__right">
-				<span class="counter__text">insert the phone into your VR headset</span>
-				<span class="counter__timer">10</span>
-			</span>
+        </div>
+    </section>
 
-			</span>
-		</div>
-	</section>
+    <section class="scene">
+        <a-scene stats shadow="type:pcf">
+			            <!-- assets -->
+            <a-assets>
+                <a-asset-item id="scene-glb" crossOrigin="anonymous" src="assets/models/greek-temple.glb"></a-asset-item>
+                <audio id="music-background" src="assets/music/background.mp3" loop="true" autoplay preload="auto"></audio>
+                <!-- autoplay is needed for iOS to precache but will not actually autoplay-->
+                <img id="person" src="assets/images/person.png">
+            </a-assets>
 
-	<section class="scene">
-		<a-scene  stats>
-				<a-entity id="sky" sun-position-setter="sunSrc: #zon" geometry="primitive: sphere; radius: 100" material="shader: sky; side: back" >
+            <a-curve id="cameratrack" closed="false">
+                <a-curve-point position="20 30 40"></a-curve-point>
+                <a-curve-point position="12 15 29"></a-curve-point>
+                <a-curve-point position="11 7.0 27"></a-curve-point>
+                <a-curve-point position="3.5 0.25 23"></a-curve-point>
 
-					  </a-entity>
-
-			<!-- <a-animation attribute="background.color" easing="linear" dur="60000" from="#fffce4" to="#ffbe78"
-				direction="alternate" repeat="indefinite"></a-animation> -->
-
-			<!-- assets -->
-			<a-assets>
-				<a-asset-item id="scene-glb" crossOrigin="anonymous" src="assets/models/greek-temple.glb"></a-asset-item>
-				<audio id="music-background" src="assets/music/background.mp3" loop="true" autoplay preload="auto"></audio> <!-- autoplay is needed for iOS to precache but will not actually autoplay-->
-				<img id="person" src="assets/images/person.png">
-			</a-assets>
-
-			<a-curve id="cameratrack" closed="false">
-				<a-curve-point position="15 25 33"></a-curve-point>
-				<a-curve-point position="12 15 29"></a-curve-point>
-				<a-curve-point position="11 7.0 27"></a-curve-point>
-				<a-curve-point position="3.5 0.25 23"></a-curve-point>
-
-				<a-curve-point position="-3 2.5 15.15118"></a-curve-point>
-				<a-curve-point position="2 1.4 4.8"></a-curve-point>
-				<a-curve-point position="-0.0079 2.5 -10"></a-curve-point>
-				<a-curve-point position="-0.0079 0 -12.86"></a-curve-point>
+                <a-curve-point position="-3 2.5 15.15118"></a-curve-point>
+                <a-curve-point position="2 1.4 4.8"></a-curve-point>
+                <a-curve-point position="-0.0079 2.5 -8"></a-curve-point>
+                <a-curve-point position="-0.0079 0 -10.86"></a-curve-point>
 			</a-curve>
 
+			<a-curve id="lighttrack" closed="false">
+				<a-curve-point position="0.150 0.32615 28" ></a-curve-point>
+				<a-curve-point position="6.0884 0.32615 27.29699" ></a-curve-point>
+				<a-curve-point position="6.0884 1.94979 13.82852" ></a-curve-point>
+				<a-curve-point position="6.0884 2.4979 -5.13242" ></a-curve-point>
+				<a-curve-point position="6.0884 20.53702 -34.93973" ></a-curve-point>
+			</a-curve>
+
+
 			<a-draw-curve curveref="#cameratrack" material="shader: line; color: blue;"></a-draw-curve>
-			<!-- <a-box alongpath="curve: #cameratrack; dur: 5000; loop:true; rotate:true"></a-box> -->
+			<a-draw-curve curveref="#lighttrack" material="shader: line; color: yellow;"></a-draw-curve>
 
-			<!-- <a-entity id="ambient" light="type:ambient;intensity:0.26;distance:6.02;penumbra:0.37" position="0 0 -10" rotation="-90 0 0"></a-entity> -->
+			<a-entity id="theEnvironment"
+				position="0 -1.4 0"
+				environment="shadow: true; fog: 0.7; shadowSize:15; groundYScale: 20; skyColor:#4ea2b5;lighting:distant; preset: tron; seed: 13; lightPosition: -20 -1 -17; skyType: atmosphere; dressingAmount: 50; dressingColor: #2afbee; grid: 2x2; gridColor: #2afbee"
+				fixanimation="component: environment; property: lightPosition.y"
+				fixanimation__sunX="component: environment; property: lightPosition.x"
+				animation="property: fixanimation.value; easing: linear; from: 30 ; to: -0.8; dur: 9000;"
+				animation__sunX="property: fixanimation__sunX.value; easing: linear; from: -20 ; to: 0; dur: 8000;"
+				>
 
-			<a-entity position="0 0 -2.5">
+			</a-entity>
 
-				<!-- <a-entity id="room" model-load-event obj-model="obj: #scene-obj; " shadow=""></a-entity> -->
-				<a-gltf-model
 
-				replace-materials id="room" model-load-event src="#scene-glb" shadow
 
+
+		<!-- <a-entity id="sky" sun-position-setter="sunSrc: #zon" geometry="primitive: sphere; radius: 100" material="shader: sky; side: back">
+
+		</a-entity> -->
+
+		<!-- <a-animation attribute="background.color" easing="linear" dur="60000" from="#fffce4" to="#ffbe78"
+			direction="alternate" repeat="indefinite"></a-animation> -->
+
+
+
+
+
+                <a-gltf-model replace-materials id="room" model-load-event src="#scene-glb" shadow
 				></a-gltf-model>
 
-				<a-plane id="person-obj" scale="0.730 1 1" position="0.194 1.059 0.000" shadow="" geometry="depth:0.1"
-					material="src:#person;alphaTest:0.78;"></a-plane>
+                <a-plane id="person-obj" scale="0.730 1 1" position="0.13339 2.10809 -13.61071" shadow="" geometry="depth:0.1" material="src:#person;alphaTest:0.78;"></a-plane>
 
-				<a-entity id="spot" light="castShadow: true; type: spot; intensity: 4; distance: 10; penumbra: 1"
-					position="0 2.62924 -13.3921" rotation="0.01 0 180">
-					<a-animation attribute="light.intensity" dur="10000" from="0" to="3" direction="alternate"
-						repeat="indefinite"></a-animation>
-				</a-entity>
-
-				<a-entity id="softbox" light="castShadow:true;type:spot;distance:7.38;angle:50;decay:2.59;penumbra:1"
-					position="-1.37014 1.34239 0.57814"
-					rotation="-38.512504115308545 -73.94650599737918 172.0512044686544">
+				<a-entity id="spot-op-model" light="castShadow: true; type: spot; intensity: 0; distance: 10; penumbra: 0.48; groundColor: #7998ff"
+					position="0 3.4244 -7.75103"
+					rotation="0.03 0.15 179.99"
+					animation="property: light.intensity; delay: 40000; from: 0; to: 2">
 				</a-entity>
 
 
-				<a-entity id="ambient"
-				light="castShadow:false; type: spot; intensity: 0.4; color: #f0f; distance: 1; penumbra: 1; angle: 120; decay: 0"
-				position="0.42583 1.54297 1.4604" rotation="180 180 0"
-				animation__ambientcolor="property: light.color; type:color;  easing:linear; from: #ffffee ; to: #ffffff ; loop: true; dur: 50000"
-				animation__ambientstrength="property: light.intensity; dir:alternate;  easing:linear;  from: 0.2; to: 1.2 ; loop: true; dur: 25000">
 
+				<!-- sfeerlicht -->
+				<a-entity
+				alongpath="curve: #lighttrack; resetonplay:true; loop:false;  delay: 15000; dur: 20000;"
+				animation="property: light.intensity; delay: 14000 ;dur:1000;from:0;to:2;"
+				animation__fadeOut="property:light.intensity; delay: 35000 ;dur:2000;from:2;to:0;"
+				light="type:spot;castShadow:true;intensity:0"
+				position="2.34585 -1.5718 32.19876" id="frontlight" rotation="">
+			</a-entity>
 
+			<!-- midden van scene -->
 
-<!-- SUN RIG -->-->
-<a-entity position="0 0 -10"
+			<a-entity light="intensity: 0.87; type: point; color: #ff3322; decay: 0.5; distance: 15"
+			position="0.05 3.41 4.54"
 
-animation__sunrot="property: object3D.rotation; easing:linear;  from: 0 360 360 ; to: 0 180 180; loop: true; dur: 50000">
+			>
 
+			</a-entity>
 
-<a-entity animation__sunheight="property: object3D.rotation.z; easing:linear;  from: 400 ; to: 180; loop: true; dur: 50000">
+            <!-- SUN RIG -->
+			<!-- <a-entity position="0 0 -20" geometry="type:box"
+				animation__sunrot="property: object3D.rotation; easing:linear;  from: 0 360 360 ; to: 0 180 180; loop: true; dur: 50000">
+				<a-entity geometry="type:box"
+					animation__sunheight="property: object3D.rotation.z; easing:linear;  from: 400 ; to: 180; loop: true; dur: 50000">
+					<a-entity id="zon" position="-10 0 0"
+						geometry="type:box"
+						light="castShadow:true;shadowMapHeight:512;shadowMapWidth:512;intensity:3"
+						animation__suncolor="property: light.color;  type:color;  easing:linear; from: #fffce4 ; to: #ffbe78 ; loop: true; dur: 50000"
+						animation__sunintensity="property: light.intensity;   easing:linear; dir:alternate; from: 0; to: 2 ; loop: true; dur: 25000">
+                    </a-entity>
+                </a-entity>
+            </a-entity> -->
 
-<a-entity id="zon" position="-10 0 0"
+            <!-- camera -->
 
-	light="castShadow:true;shadowMapHeight:1024;shadowMapWidth:1024"
-
-	animation__shader="property: object3D.rotation.y; easing:linear;  from: -10 ; to: 190; loop: true; dur: 50000"
-	animation__suncolor="property: light.color;  type:color;  easing:linear; from: #fffce4 ; to: #ffbe78 ; loop: true; dur: 50000"
-	animation__sunintensity="property: light.intensity;   easing:linear; dir:alternate; from: 0; to: 2 ; loop: true; dur: 25000">
-	</a-entity>
-</a-entity>
-</a-entity>
-
-
-</a-entity>
-
-			<!-- camera -->
-
-			<!-- rig voor VR camera te helpen moven. controlled door camera track-->
-			<a-entity alongpath="curve: #cameratrack; resetonplay:true; loop:false; rotation:true; dur: 30000">
-				<!-- De camera moet op  0 H 0 blijven staan, omdat switchen naar VR de positie reset. Enkel H is gebruikt in non-vr mode voor hoogte -->
-				<a-entity camera="userHeight:1.6; fov:73.73" look-controls wasd-controls rotation="0 90 0"
-					position="0 1.7 0">
-				</a-entity>
-				<a-entity light="type:point;intensity:1;distance:10;penumbra:1" position="" rotation=""></a-entity>
-				<!-- <a-box  position="0 0 -3" color="#ff0000" ></a-box>
+            <!-- rig voor VR camera te helpen moven. controlled door camera track-->
+            <a-entity geometry="type:box" alongpath="curve: #cameratrack; resetonplay:true; loop:false; rotation:true; dur: 40000">
+                <!-- De camera moet op  0 H 0 blijven staan, omdat switchen naar VR de positie reset. Enkel H is gebruikt in non-vr mode voor hoogte -->
+                <a-entity geometry="type:box" camera="userHeight:1.6; fov:73.73" look-controls wasd-controls rotation="0 90 0" position="0 1.7 0">
+                </a-entity>
+                <a-entity light="type:point;intensity:0.4;distance:10;penumbra:1" position="" rotation=""></a-entity>
+                <!-- <a-box  position="0 0 -3" color="#ff0000" ></a-box>
 				<a-entity cursor="fuse: true;" position="0 0 -1" scale="0.05" geometry="primitive: ring; radiusOuter: 0.004; radiusInner: 0.002; "
 				 material="color: magenta; shader: flat">
 					<a-animation begin="cursor-fusing" easing="ease-in" attribute="scale" dur="1500" fill="backwards" from="1 1 1" to="0.1 0.1 0.1"></a-animation>
 					<a-animation begin="click" easing="ease-in" attribute="scale" dur="150" fill="forwards" from="0.1 0.1 0.1" to="1 1 1"></a-animation>
 				</a-entity> -->
 
-			</a-entity>
+            </a-entity>
 
-			<a-entity sound="src:#music-background"></a-entity>
+            <a-entity sound="src:#music-background"></a-entity>
 
-		</a-scene>
-	</section>
+        </a-scene>
+    </section>
+
+
+
+
+
 </body>
 
 </html>

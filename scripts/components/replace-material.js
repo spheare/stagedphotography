@@ -6,7 +6,7 @@ const wireframe = new THREE.MeshPhysicalMaterial({
 	reflectivity: 1,
 	clearCoat: 1,
 	clearCoatRoughness: 0.5,
-
+	name: 'WIREFRAME',
 	wireframe: true
 });
 
@@ -18,10 +18,41 @@ const translucent = new THREE.MeshPhysicalMaterial({
 	reflectivity: 1,
 	clearCoat: 1,
 	clearCoatRoughness: 0.5,
-
+	name: 'GLASS',
 	transparent: true,
 	opacity: 0.5
 });
+
+const PATCH_VALUES = {
+	'StoneMarbleCalacatta004_3K' : { // normaal
+		metalness: 0.8,
+		roughness: 0.5
+	},
+	'Marble13_3K' : { // groen
+		metalness: 1,
+		roughness: 0.5
+	},
+	'MetalSpottyDiscoloration001_1K' : {
+		metalness: 1,
+		roughness: 0
+	},'Plaster17_3K' : {
+		metalness: 0.1,
+		roughness: 1
+	},
+}
+// urls of the images, one per half axis
+const environmentMap = [
+	'assets/images/envmap.png',
+	'assets/images/envmap.png',
+	'assets/images/envmap.png',
+	'assets/images/envmap.png',
+	'assets/images/envmap.png',
+	'assets/images/envmap.png'
+];
+
+// wrap it up into the object that we need
+const cubemap = THREE.ImageUtils.loadTextureCube(environmentMap);
+cubemap.format = THREE.RGBFormat;
 
 const MATERIALS = { wireframe, translucent };
 
@@ -34,11 +65,29 @@ AFRAME.registerComponent('replace-materials', {
 			if (!obj) return;
 			if (obj.children)
 				obj.children.forEach(child => replaceMat(child, name, newmat));
+
+				if( !obj.material) return;
+			// replace original material from blender
 			if (
-				obj.material &&
+
 				(obj.material.name || '').toLowerCase() === name.toLowerCase()
 			)
 				obj.material = newmat;
+
+			// set envmap anyway on everything
+			if (  obj.material.type === 'MeshStandardMaterial') {
+				obj.material.envMap = cubemap;
+				obj.material.envMapIntensity = 1;
+			}
+
+			// patch up values from blender
+			if( PATCH_VALUES[obj.material.name] )
+			{
+				const newValues = PATCH_VALUES[obj.material.name] ;
+				Object.keys(newValues).forEach(key => obj.material[key] = newValues[key]);
+				obj.material.needsUpdate = true;
+				console.log('update physical material', obj.material.name);
+			}
 		};
 
 		this.el.addEventListener('model-loaded', () =>

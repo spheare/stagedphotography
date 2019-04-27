@@ -4,7 +4,7 @@ document.location.href.indexOf('192.168') >= 0 ||
 document.location.href.indexOf('10.0.0') >= 0;
 
 const Settings = {
-	DEFAULT_COUNTDOWN: DEBUG ? 0 : 3
+	DEFAULT_COUNTDOWN: DEBUG ? 0 : 5
 };
 
 const Selectors = {
@@ -18,7 +18,7 @@ const Selectors = {
 
 function main() {
 	console.info('VR Staged Photography - Kevin Vaesen - 2019');
-	if (DEBUG) console.log('Debug mode');
+	if (DEBUG) console.warn('Debug mode');
 
 	const [ button, scene, welcome ] = [
 		Selectors.STARTBUTTON,
@@ -28,7 +28,8 @@ function main() {
 
 	trackPreloadAssets().then(() => {
 		welcome.classList.add('welcome--load-complete');
-		button.addEventListener(DEBUG ? 'mouseover' : 'click', run);
+		button.addEventListener( 'click', run);
+		if( DEBUG ) run();
 	});
 
 	scene.addEventListener('loaded', () => {
