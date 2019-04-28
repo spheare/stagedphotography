@@ -33,8 +33,8 @@ const PATCH_VALUES = {
 		roughness: 0.5
 	},
 	'MetalSpottyDiscoloration001_1K' : {
-		metalness: 1,
-		roughness: 0
+		metalness: 0.9,
+		roughness: 0.2
 	},'Plaster17_3K' : {
 		metalness: 0.1,
 		roughness: 1

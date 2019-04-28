@@ -84,7 +84,7 @@
                 <a-curve-point position="20 30 40"></a-curve-point>
                 <a-curve-point position="12 15 29"></a-curve-point>
                 <a-curve-point position="11 7.0 27"></a-curve-point>
-                <a-curve-point position="3.5 0.25 23"></a-curve-point>
+                <a-curve-point position="3.5 0.25 25"></a-curve-point>
 
                 <a-curve-point position="-3 2.5 15.15118"></a-curve-point>
                 <a-curve-point position="2 1.4 4.8"></a-curve-point>
@@ -93,7 +93,7 @@
 			</a-curve>
 
 			<a-curve id="lighttrack" closed="false">
-				<a-curve-point position="0.150 0.32615 28" ></a-curve-point>
+				<a-curve-point position="0.3151 1.58049 27.43791"  ></a-curve-point>
 				<a-curve-point position="6.0884 0.32615 27.29699" ></a-curve-point>
 				<a-curve-point position="6.0884 1.94979 13.82852" ></a-curve-point>
 				<a-curve-point position="6.0884 2.4979 -5.13242" ></a-curve-point>
@@ -143,18 +143,19 @@
 
 
 				<!-- sfeerlicht -->
-				<a-entity
-				alongpath="curve: #lighttrack; resetonplay:true; loop:false;  delay: 15000; dur: 20000;"
-				animation="property: light.intensity; delay: 14000 ;dur:1000;from:0;to:2;"
-				animation__fadeOut="property:light.intensity; delay: 35000 ;dur:2000;from:2;to:0;"
-				light="type:spot;castShadow:true;intensity:0"
-				position="2.34585 -1.5718 32.19876" id="frontlight" rotation="">
-			</a-entity>
+				<a-entity alongpath="curve: #lighttrack; delay: 15000; dur: 20000; play: false"
+				animation="property: light.intensity; delay: 14000; from: 0; to: 2"
+				animation__fadeout="property: light.intensity; delay: 35000; dur: 2000; from: 2; to: 0"
+				light="type: spot; castShadow: true; intensity: 0; angle: 40; decay: 0.58; distance: 30; penumbra: 0.35"
+				position="0.3151 1.58049 27.43791"
+				id="frontlight" >
+				</a-entity>
 
-			<!-- midden van scene -->
-
-			<a-entity light="intensity: 0.87; type: point; color: #ff3322; decay: 0.5; distance: 15"
-			position="0.05 3.41 4.54"
+				<!-- midden van scene -->
+			<a-entity light="intensity: 0; type: point; color: #ff3322; decay: 0.5; distance: 15"
+			id="gezelligroodlampje"
+			position="-0.13648 4.21297 4.54"
+			animation="property: light.intensity; dur: 5000; delay: 25000; from: 0; to: 0.9"
 
 			>
 
