@@ -44,7 +44,7 @@ function trackPreloadAssets() {
 	const assetLoadElements = assets.map(el => {
 		const li = document.createElement('li');
 		li.classList.add('welcome__loaditem');
-		li.innerText = el.id || el.src;
+		li.innerText = el.alt || el.id || el.src ;
 		status.appendChild(li);
 		return { el, li };
 	});

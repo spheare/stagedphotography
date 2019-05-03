@@ -1,29 +1,21 @@
-const wireframe = new THREE.MeshPhysicalMaterial({
-	color: 0x2194ce,
-	emissive: 0x7f9b9b,
-	roughness: 0,
-	metalness: 1,
-	reflectivity: 1,
-	clearCoat: 1,
-	clearCoatRoughness: 0.5,
-	name: 'WIREFRAME',
-	wireframe: true
-});
+// urls of the images, one per half axis
+const environmentMap = THREE.ImageUtils.loadTextureCube([
+	'assets/images/envmap-xpos.png',
+	'assets/images/envmap-xneg.png',
+	'assets/images/envmap-ypos.png',
+	'assets/images/envmap-yneg.png',
+	'assets/images/envmap-zpos.png',
+	'assets/images/envmap-zneg.png'
+	// 'assets/images/Right.png',
+	// 'assets/images/Left.png',
+	// 'assets/images/Top.png',
+	// 'assets/images/Bottom.png',
+	// 'assets/images/Front.png',
+	// 'assets/images/Back.png'
+]);
+environmentMap.format = THREE.RGBFormat;
 
-const translucent = new THREE.MeshPhysicalMaterial({
-	color: 0x2194ce,
-	emissive: 0x7f9b9b,
-	roughness: 0,
-	metalness: 1,
-	reflectivity: 1,
-	clearCoat: 1,
-	clearCoatRoughness: 0.5,
-	name: 'GLASS',
-	transparent: true,
-	opacity: 0.5
-});
-
-const PATCH_VALUES = {
+const PATCH_MATERIALS = {
 	StoneMarbleCalacatta004_3K: {
 		// normaal
 		metalness: 0.8,
@@ -43,41 +35,57 @@ const PATCH_VALUES = {
 		roughness: 1
 	}
 };
-// urls of the images, one per half axis
-const environmentMap = [
-	'assets/images/envmap.png',
-	'assets/images/envmap.png',
-	'assets/images/envmap.png',
-	'assets/images/envmap.png',
-	'assets/images/envmap.png',
-	'assets/images/envmap.png'
-];
 
-// wrap it up into the object that we need
-const cubemap = THREE.ImageUtils.loadTextureCube(environmentMap);
-cubemap.format = THREE.RGBFormat;
 
-const MATERIALS = { wireframe, translucent };
+const NEW_MATERIALS = {
+	wireframe: new THREE.MeshPhysicalMaterial({
+		color: 0x2194ce,
+		emissive: 0x7f9b9b,
+		roughness: 0,
+		metalness: 1,
+		reflectivity: 1,
+		clearCoat: 1,
+		clearCoatRoughness: 0.5,
+		name: 'WIREFRAME',
+		wireframe: true
+	}),
+	translucent: new THREE.MeshPhysicalMaterial({
+		color: 0x2194ce,
+		emissive: 0x7f9b9b,
+		roughness: 0,
+		metalness: 1,
+		reflectivity: 1,
+		clearCoat: 1,
+		clearCoatRoughness: 0.5,
+		name: 'GLASS',
+		transparent: true,
+		opacity: 0.5
+	})
+};
 
-const replaceMat = (obj, name, newmat) => {
+const replaceMat = obj => {
 	if (!obj) return;
-	if (obj.children)
-		obj.children.forEach(child => replaceMat(child, name, newmat));
+	if (obj.children) obj.children.forEach(child => replaceMat(child));
 
 	if (!obj.material) return;
-	// replace original material from blender
-	if ((obj.material.name || '').toLowerCase() === name.toLowerCase())
-		obj.material = newmat;
+
+	// replace original materials from blender
+	Object.keys(NEW_MATERIALS)
+		.map(name => [ name, NEW_MATERIALS[name] ])
+		.forEach(([ name, newmat ]) => {
+			if ((obj.material.name || '').toLowerCase() === name.toLowerCase())
+				obj.material = newmat;
+		});
 
 	// set envmap anyway on everything
 	if (obj.material.type === 'MeshStandardMaterial') {
-		obj.material.envMap = cubemap;
-		obj.material.envMapIntensity = 1;
+		obj.material.envMap = environmentMap;
+		obj.material.envMapIntensity = 2;
 	}
 
 	// patch up values from blender
-	if (PATCH_VALUES[obj.material.name]) {
-		const newValues = PATCH_VALUES[obj.material.name];
+	if (PATCH_MATERIALS[obj.material.name]) {
+		const newValues = PATCH_MATERIALS[obj.material.name];
 		Object.keys(newValues).forEach(
 			key => (obj.material[key] = newValues[key])
 		);
@@ -89,11 +97,7 @@ const replaceMat = (obj, name, newmat) => {
 AFRAME.registerComponent('replace-materials', {
 	init: function() {
 		this.el.addEventListener('model-loaded', () =>
-			Object.keys(MATERIALS)
-				.map(key => [ key, MATERIALS[key] ])
-				.forEach(([ key, material ]) =>
-					replaceMat(this.el.object3D, key, material)
-				)
+			replaceMat(this.el.object3D)
 		);
 	}
 });
