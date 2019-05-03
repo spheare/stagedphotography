@@ -3,7 +3,7 @@ AFRAME.registerComponent('model-load-event', {
 
 	init() {
 		this.el.addEventListener('model-loaded', ()=>{
-			console.info('IT LOADED');
+			// console.info('IT LOADED');
 		})
 	}
 });

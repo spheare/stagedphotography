@@ -24,22 +24,25 @@ const translucent = new THREE.MeshPhysicalMaterial({
 });
 
 const PATCH_VALUES = {
-	'StoneMarbleCalacatta004_3K' : { // normaal
+	StoneMarbleCalacatta004_3K: {
+		// normaal
 		metalness: 0.8,
 		roughness: 0.5
 	},
-	'Marble13_3K' : { // groen
+	Marble13_3K: {
+		// groen
 		metalness: 1,
 		roughness: 0.5
 	},
-	'MetalSpottyDiscoloration001_1K' : {
+	MetalSpottyDiscoloration001_1K: {
 		metalness: 0.9,
 		roughness: 0.2
-	},'Plaster17_3K' : {
+	},
+	Plaster17_3K: {
 		metalness: 0.1,
 		roughness: 1
-	},
-}
+	}
+};
 // urls of the images, one per half axis
 const environmentMap = [
 	'assets/images/envmap.png',
@@ -56,40 +59,35 @@ cubemap.format = THREE.RGBFormat;
 
 const MATERIALS = { wireframe, translucent };
 
-console.log('replace material loaded.');
+const replaceMat = (obj, name, newmat) => {
+	if (!obj) return;
+	if (obj.children)
+		obj.children.forEach(child => replaceMat(child, name, newmat));
+
+	if (!obj.material) return;
+	// replace original material from blender
+	if ((obj.material.name || '').toLowerCase() === name.toLowerCase())
+		obj.material = newmat;
+
+	// set envmap anyway on everything
+	if (obj.material.type === 'MeshStandardMaterial') {
+		obj.material.envMap = cubemap;
+		obj.material.envMapIntensity = 1;
+	}
+
+	// patch up values from blender
+	if (PATCH_VALUES[obj.material.name]) {
+		const newValues = PATCH_VALUES[obj.material.name];
+		Object.keys(newValues).forEach(
+			key => (obj.material[key] = newValues[key])
+		);
+		obj.material.needsUpdate = true;
+		console.log('update physical material', obj.material.name);
+	}
+};
 
 AFRAME.registerComponent('replace-materials', {
-	init: function() {},
-	update: function() {
-		const replaceMat = (obj, name, newmat) => {
-			if (!obj) return;
-			if (obj.children)
-				obj.children.forEach(child => replaceMat(child, name, newmat));
-
-				if( !obj.material) return;
-			// replace original material from blender
-			if (
-
-				(obj.material.name || '').toLowerCase() === name.toLowerCase()
-			)
-				obj.material = newmat;
-
-			// set envmap anyway on everything
-			if (  obj.material.type === 'MeshStandardMaterial') {
-				obj.material.envMap = cubemap;
-				obj.material.envMapIntensity = 1;
-			}
-
-			// patch up values from blender
-			if( PATCH_VALUES[obj.material.name] )
-			{
-				const newValues = PATCH_VALUES[obj.material.name] ;
-				Object.keys(newValues).forEach(key => obj.material[key] = newValues[key]);
-				obj.material.needsUpdate = true;
-				console.log('update physical material', obj.material.name);
-			}
-		};
-
+	init: function() {
 		this.el.addEventListener('model-loaded', () =>
 			Object.keys(MATERIALS)
 				.map(key => [ key, MATERIALS[key] ])
