@@ -14,21 +14,7 @@ AFRAME.registerComponent('video-texture', {
 	},
 
 	init() {
-		/*/
-		const material = new THREE.MeshPhysicalMaterial({
-			color: 0xff0f00,
-
-			roughness: 0,
-			metalness: 1,
-			reflectivity: 1,
-			clearCoat: 1,
-			clearCoatRoughness: 0.5,
-			name: 'GLASS',
-			transparent: true,
-			opacity: 0.5
-		});
-
-		/*/
+		// MAKE SURE TO PLAY THE VIDEO VIA A USERINTERACTION
 		this.material = new THREEx.ChromaKeyMaterial( this.data.src, 0xd432);
 		/**/
 		// video.play();
@@ -36,13 +22,8 @@ AFRAME.registerComponent('video-texture', {
 		// this.material = new THREE.MeshLambertMaterial( {map: texture} );
 
 		setMaterial(this.el.object3D, this.material);
-		// this.material.startVideo();
-		// this.el.object3D.material.needsUpdate = true;
-		// this.el.object3D.material.startVideo();
-		// this.el.object3D.material.update();
 	},
 	tick() {
-		// console.log('component update');
 		this.material.update();
 	}
 });

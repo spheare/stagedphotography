@@ -166,13 +166,12 @@
 					position="-3.78178 3.83315 -8.69556"
 					rotation="0 150.17166514599364"></a-gltf-model>
 
-					<!-- material="src: #dancer-video" -->
 					<!-- persoon-->
 					<a-entity
 					scale="1 1 1"
 					geometry="primitive:plane;depth:0.1"
 					video-texture="src: #dancer-video"
-				position="0 2 -3"
+					position="0 2.08 -13.28"
 				></a-entity>
 
 
@@ -209,7 +208,7 @@
 				<!-- camera -->
 
 				<!-- rig voor VR camera te helpen moven. controlled door camera track-->
-				<a-entity XXXXalongpath="curve: #cameratrack; resetonplay:true; loop:false;
+				<a-entity alongpath="curve: #cameratrack; resetonplay:true; loop:false;
 					rotation:true; dur: 40000">
 					<!-- De camera moet op  0 H 0 blijven staan, omdat switchen naar VR de positie reset. Enkel H is gebruikt in non-vr mode voor hoogte -->
 					<a-entity camera="userHeight:1.6; fov:73.73"
