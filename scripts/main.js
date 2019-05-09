@@ -13,6 +13,7 @@ const Selectors = {
 	LOADTEXT: '.welcome__loadtext',
 	WELCOME: '.welcome',
 	BACKGROUND_MUSIC: '#music-background',
+	VIDEO: '#dancer-video',
 	TIMERSPAN: '.counter__timer'
 };
 
@@ -29,7 +30,7 @@ function main() {
 	trackPreloadAssets().then(() => {
 		welcome.classList.add('welcome--load-complete');
 		button.addEventListener( 'click', run);
-		if( DEBUG ) run();
+		// if( DEBUG ) run();
 	});
 
 	scene.addEventListener('loaded', () => {
@@ -76,10 +77,11 @@ function trackPreloadAssets() {
 }
 
 function run() {
-	const [ body, audio, scene ] = [
+	const [ body, audio, scene, video] = [
 		'body',
 		Selectors.BACKGROUND_MUSIC,
-		'a-scene'
+		'a-scene',
+		Selectors.VIDEO
 	].map(i => $(i)[0]);
 	const timerSpans = $(Selectors.TIMERSPAN);
 	let nCountDown = Settings.DEFAULT_COUNTDOWN;
@@ -102,6 +104,7 @@ function run() {
 		scene.play();
 	}, 1000 * nCountDown);
 
+	video.play();
 	if (!DEBUG) {
 		audio.play();
 		scene.enterVR();

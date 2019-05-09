@@ -3,27 +3,28 @@
 
 	<head>
 		<meta name="apple-mobile-web-app-capable"
-			  content="yes">
+			content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style"
-			  content="black-translucent">
+			content="black-translucent">
 		<meta name="viewport"
-			  content="width=device-width, height=device-height, minimal-ui,  user-scalable = no, initial-scale = 1.0" />
+			content="width=device-width, height=device-height, minimal-ui, user-scalable=
+			no, initial-scale= 1.0" />
 
 		<title>Staged Photography</title>
 		<link rel="stylesheet"
-			  href="css/main.css" />
+			href="css/main.css" />
 
 		<script src="scripts/main.js"></script>
 		<script src="scripts/webvr-polyfill.js"></script>
 		<script src="scripts/aframe.min.js"></script>
+		<script src="scripts/threex.chromakey.js"></script>
 		<!-- <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script> -->
-
 		<!-- <script src="scripts/aframe-eventset-component.min.js"></script> -->
 		<!-- <script src="scripts/aframe-template-component.min.js"></script> -->
-
 		<script src="scripts/components/automove.js"></script>
 		<script src="scripts/components/wireframe-shader.js"></script>
 		<script src="scripts/components/model-load-event.js"></script>
+		<script src="scripts/components/video-texture.js"></script>
 		<script src="scripts/components/replace-material.js"></script>
 		<script src="scripts/components/fixvec3animation.js"></script>
 		<script src="scripts/components/occlusion-map.js"></script>
@@ -77,23 +78,30 @@
 
 		<section class="scene">
 			<a-scene stats
-					 shadow="type:pcf">
+				shadow="type:pcf">
 				<!-- assets -->
 				<a-assets>
 					<a-asset-item alt="Main Scene" id="scene-glb"
-								  crossOrigin="anonymous"
-								  src="assets/models/greek-temple.glb"></a-asset-item>
+						crossOrigin="anonymous"
+						src="assets/models/greek-temple.glb"></a-asset-item>
 					<a-asset-item alt="Main Scene Objects" id="exit-glb"
-								  crossOrigin="anonymous"
-								  src="assets/models/exitsign.glb"></a-asset-item>
+						crossOrigin="anonymous"
+						src="assets/models/exitsign.glb"></a-asset-item>
 					<audio alt="Music" id="music-background"
-						   src="assets/music/background.mp3"
-						   loop="true"
-						   autoplay
-						   preload="auto"></audio>
-						   <!-- autoplay is needed for iOS to precache but will not actually autoplay-->
-					<img alt="Dancer" id="person" src="assets/images/person.png" />
-					<img alt="Textures" src="assets/images/envmap-xpos.png"/>
+						src="assets/music/background.mp3"
+						loop="true"
+						autoplay
+						preload="auto"></audio>
+
+					<video alt="Video" id="dancer-video"
+						src="assets/video/chicken.mp4"
+						loop="true"
+						autoplay
+						preload="auto"></video>
+
+					<!-- autoplay is needed for iOS to precache but will not actually autoplay-->
+					<!-- <img alt="Dancer" id="person" src="assets/images/person.png" /> -->
+					<img alt="Textures" src="assets/images/envmap-xpos.png" />
 					<img alt="Textures" src="assets/images/envmap-xneg.png" />
 					<img alt="Textures" src="assets/images/envmap-ypos.png" />
 					<img alt="Textures" src="assets/images/envmap-yneg.png" />
@@ -102,7 +110,7 @@
 				</a-assets>
 
 				<a-curve id="cameratrack"
-						 closed="false">
+					closed="false">
 					<a-curve-point position="20 30 40"></a-curve-point>
 					<a-curve-point position="12 15 29"></a-curve-point>
 					<a-curve-point position="11 7.0 27"></a-curve-point>
@@ -115,7 +123,7 @@
 				</a-curve>
 
 				<a-curve id="lighttrack"
-						 closed="false">
+					closed="false">
 					<a-curve-point position="0.3151 1.58049 27.43791"></a-curve-point>
 					<a-curve-point position="6.0884 0.32615 27.29699"></a-curve-point>
 					<a-curve-point position="6.0884 1.94979 13.82852"></a-curve-point>
@@ -125,94 +133,106 @@
 
 				<!-- <a-draw-curve curveref="#cameratrack" material="shader: line; color: blue;"></a-draw-curve> -->
 				<!-- <a-draw-curve curveref="#lighttrack" material="shader: line; color: yellow;"></a-draw-curve> -->
-
 				<!-- omgeving-->
 				<a-entity id="theEnvironment"
-						  position="0 -1.4 0"
-						  environment="shadow: true; fog: 0.7; shadowSize:15; groundYScale: 20; skyColor:#4ea2b5;lighting:distant; preset: tron; seed: 13; lightPosition: -20 -1 -17; skyType: atmosphere; dressingAmount: 50; dressingColor: #2afbee; grid: 2x2; gridColor: #2afbee"
-						  fixanimation="component: environment; property: lightPosition.y; "
-						  fixanimation__sunX="component: environment; property: lightPosition.x"
-						  animation="property: fixanimation.value; easing: easeOutQuart; from: 30 ; to: -1; dur: 9000;"
-						  animation__sunX="property: fixanimation__sunX.value; easing: easeOutQuart; from: -20 ; to: 0; dur: 8000;">
+					position="0 -1.4 0"
+					environment="shadow: true; fog: 0.7; shadowSize:15; groundYScale: 20;
+					skyColor:#4ea2b5;lighting:distant; preset: tron; seed: 13; lightPosition:
+					-20 -1 -17; skyType: atmosphere; dressingAmount: 50; dressingColor:
+					#2afbee; grid: 2x2; gridColor: #2afbee"
+					fixanimation="component: environment; property: lightPosition.y;"fixanimation__sunX="component:
+					environment; property: lightPosition.x"
+					animation="property: fixanimation.value; easing: easeOutQuart; from: 30 ;
+					to: -1; dur: 9000;"
+					animation__sunX="property: fixanimation__sunX.value; easing: easeOutQuart;
+					from: -20 ; to: 0; dur: 8000;">
 
 				</a-entity>
 
 				<!-- tempel-->
 				<a-gltf-model Xao-map="src: assets/images/aomap.png"
-							  replace-materials
-							  id="room"
-							  model-load-event
-							  src="#scene-glb"
-							  shadow></a-gltf-model>
+					replace-materials
+					id="room"
+					model-load-event
+					src="#scene-glb"
+					shadow></a-gltf-model>
 				<!-- exit sign-->
 				<a-gltf-model reset-on-click
-							  id="exitsign"
-							  src="#exit-glb"
-							  shadow
-							  replace-materials
-							  src="#exitsign-glb"
-							  position="-3.78178 3.83315 -8.69556"
-							  rotation="0 150.17166514599364"></a-gltf-model>
+					id="exitsign"
+					src="#exit-glb"
+					shadow
+					replace-materials
+					src="#exitsign-glb"
+					position="-3.78178 3.83315 -8.69556"
+					rotation="0 150.17166514599364"></a-gltf-model>
 
-				<!-- persoon-->
-				<!-- <a-plane id="person-obj"
-						 scale="0.730 1 1"
-						 position="0.13339 2.10809 -13.61071"
-						 shadow=""
-						 geometry="depth:0.1"
-						 material="src:#person;alphaTest:0.78;"></a-plane> -->
+					<!-- material="src: #dancer-video" -->
+					<!-- persoon-->
+					<a-entity
+					scale="1 1 1"
+					geometry="primitive:plane;depth:0.1"
+					video-texture="src: #dancer-video"
+				position="0 2 -3"
+				></a-entity>
+
 
 				<!-- spot op model -->
 				<a-entity id="spot-op-model"
-						  light="castShadow: true; type: spot; intensity: 0; distance: 10; penumbra: 0.48; groundColor: #7998ff"
-						  position="0 3.4244 -7.75103"
-						  rotation="0.03 0.15 179.99"
-						  animation="property: light.intensity; delay: 40000; from: 0; to: 2">
+					light="castShadow: true; type: spot; intensity: 0; distance: 10; penumbra:
+					0.48; groundColor: #7998ff"
+					position="0 3.4244 -7.75103"
+					rotation="0.03 0.15 179.99"
+					animation="property: light.intensity; delay: 40000; from: 0; to: 2">
 				</a-entity>
 
 				<!-- sfeerlicht -->
-				<a-entity alongpath="curve: #lighttrack; delay: 15000; dur: 20000; play: false"
-						  animation="property: light.intensity; delay: 14000; from: 0; to: 2"
-						  animation__fadeout="property: light.intensity; delay: 35000; dur: 2000; from: 2; to: 0"
-						  light="type: spot; castShadow: true; intensity: 0; angle: 40; decay: 0.58; distance: 30; penumbra: 0.35"
-						  position="0.3151 1.58049 27.43791"
-						  id="frontlight">
+				<a-entity alongpath="curve: #lighttrack; delay: 15000; dur: 20000; play:
+					false"
+					animation="property: light.intensity; delay: 14000; from: 0; to: 2"
+					animation__fadeout="property: light.intensity; delay: 35000; dur: 2000;
+					from: 2; to: 0"
+					light="type: spot; castShadow: true; intensity: 0; angle: 40; decay: 0.58;
+					distance: 30; penumbra: 0.35"
+					position="0.3151 1.58049 27.43791"
+					id="frontlight">
 				</a-entity>
 
 				<!-- rood in midden van scene -->
-				<a-entity light="intensity: 0; type: point; color: #ff3322; decay: 0.5; distance: 15"
-						  id="gezelligroodlampje"
-						  position="-0.13648 4.21297 4.54"
-						  animation="property: light.intensity; dur: 5000; delay: 25000; from: 0; to: 0.9">
+				<a-entity light="intensity: 0; type: point; color: #ff3322; decay: 0.5;
+					distance: 15"
+					id="gezelligroodlampje"
+					position="-0.13648 4.21297 4.54"
+					animation="property: light.intensity; dur: 5000; delay: 25000; from: 0; to:
+					0.9">
 				</a-entity>
 
 				<!-- camera -->
 
 				<!-- rig voor VR camera te helpen moven. controlled door camera track-->
-				<a-entity alongpath="curve: #cameratrack; resetonplay:true; loop:false; rotation:true; dur: 40000">
+				<a-entity XXXXalongpath="curve: #cameratrack; resetonplay:true; loop:false;
+					rotation:true; dur: 40000">
 					<!-- De camera moet op  0 H 0 blijven staan, omdat switchen naar VR de positie reset. Enkel H is gebruikt in non-vr mode voor hoogte -->
 					<a-entity camera="userHeight:1.6; fov:73.73"
-							  look-controls
-							  rotation="0 90 0"
-							  position="0 1.7 0">
+						look-controls
+						rotation="0 90 0"
+						position="0 1.7 0">
 						<a-entity light="type:point;intensity:0.4;distance:5;penumbra:1"></a-entity>
 						<a-entity
-								  cursor="fuse: true;"
-								  material="color: white; shader: flat"
-								  position="0 0 -3"
-								  scale="0.005 0.005 0.005"
-								  geometry="primitive: circle"></a-entity>
+							cursor="fuse: true;"
+							material="color: white; shader: flat"
+							position="0 0 -3"
+							scale="0.005 0.005 0.005"
+							geometry="primitive: circle"></a-entity>
 					</a-entity>
 
 				</a-entity>
 
 				<a-entity sound="src:#music-background"></a-entity>
 
-<!--
+				<!--
 				 <a-entity id="envmapCamera" camera=" fov:73.73"
 				rotation="0 0 0"
 				position="-0.0079 1.6 -10.86"></a-entity> -->
-
 			</a-scene>
 		</section>
 
