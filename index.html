@@ -77,8 +77,7 @@
 		</section>
 
 		<section class="scene">
-			<a-scene stats
-				shadow="type:pcf">
+			<a-scene Xstats Xshadow="type:pcf">
 				<!-- assets -->
 				<a-assets>
 					<a-asset-item alt="Main Scene" id="scene-glb"
@@ -89,12 +88,11 @@
 						src="assets/models/exitsign.glb"></a-asset-item>
 					<audio alt="Music" id="music-background"
 						src="assets/music/background.mp3"
-						loop="true"
 						autoplay
 						preload="auto"></audio>
 
 					<video alt="Video" id="dancer-video"
-						src="assets/video/chicken.mp4"
+						src="assets/video/dancer-test-small.mp4"
 						loop="true"
 						autoplay
 						preload="auto"></video>
@@ -109,18 +107,28 @@
 					<img alt="Textures" src="assets/images/envmap-zneg.png" />
 				</a-assets>
 
-				<a-curve id="cameratrack"
-					closed="false">
-					<a-curve-point position="20 30 40"></a-curve-point>
-					<a-curve-point position="12 15 29"></a-curve-point>
-					<a-curve-point position="11 7.0 27"></a-curve-point>
-					<a-curve-point position="3.5 0.25 25"></a-curve-point>
 
+				<a-curve id="cameratrack" closed="false">
+					<a-curve-point position="20 30 40"></a-curve-point>
+					<a-curve-point position="12 15 34"></a-curve-point>
+					<a-curve-point position="11 7.0 30"></a-curve-point>
+					<a-curve-point position="3.5 0.25 25"></a-curve-point>
 					<a-curve-point position="-3 2.5 15.15118"></a-curve-point>
 					<a-curve-point position="2 1.4 4.8"></a-curve-point>
 					<a-curve-point position="-0.0079 2.5 -8"></a-curve-point>
 					<a-curve-point position="-0.0079 0 -10.86"></a-curve-point>
+					<!-- hold here -->
 				</a-curve>
+
+				<a-curve id="exit-cameratrack" closed="false">
+						<a-curve-point position="-0.0079 0 -10.86"></a-curve-point>
+						<a-curve-point position="-0.0079 2.5 -8"></a-curve-point>
+						<a-curve-point position="2 1.4 4.8"></a-curve-point>
+						<a-curve-point position="-3 2.5 15.15118"></a-curve-point>
+						<a-curve-point position="-20 20 40"></a-curve-point>
+						<a-curve-point position="-20 20 -50"></a-curve-point>
+				</a-curve>
+
 
 				<a-curve id="lighttrack"
 					closed="false">
@@ -131,6 +139,9 @@
 					<a-curve-point position="6.0884 20.53702 -34.93973"></a-curve-point>
 				</a-curve>
 
+
+
+				<a-draw-curve curveref="#exit-cameratrack" material="shader: line; color: red;"></a-draw-curve>
 				<!-- <a-draw-curve curveref="#cameratrack" material="shader: line; color: blue;"></a-draw-curve> -->
 				<!-- <a-draw-curve curveref="#lighttrack" material="shader: line; color: yellow;"></a-draw-curve> -->
 				<!-- omgeving-->
@@ -140,12 +151,12 @@
 					skyColor:#4ea2b5;lighting:distant; preset: tron; seed: 13; lightPosition:
 					-20 -1 -17; skyType: atmosphere; dressingAmount: 50; dressingColor:
 					#2afbee; grid: 2x2; gridColor: #2afbee"
-					fixanimation="component: environment; property: lightPosition.y;"fixanimation__sunX="component:
-					environment; property: lightPosition.x"
+					fixanimation="component: environment; property: lightPosition.y;"
+					fixanimation__sunX="component:environment; property: lightPosition.x"
 					animation="property: fixanimation.value; easing: easeOutQuart; from: 30 ;
-					to: -1; dur: 9000;"
+					to: -1; dur: 11000; startEvents: scenestart"
 					animation__sunX="property: fixanimation__sunX.value; easing: easeOutQuart;
-					from: -20 ; to: 0; dur: 8000;">
+					from: -20 ; to: 0; dur: 10000; startEvents: scenestart">
 
 				</a-entity>
 
@@ -166,12 +177,18 @@
 					position="-3.78178 3.83315 -8.69556"
 					rotation="0 150.17166514599364"></a-gltf-model>
 
-					<!-- persoon-->
-					<a-entity
-					scale="1 1 1"
+					<a-gltf-model reset-on-click
+					id="exitsign-in-air"
+					src="#exit-glb"
+					position="-20 22 -52"
+					rotation="0 0 0"></a-gltf-model>
+					<!-- Dancer-->
+				<a-entity
+					id="dancer"
+					scale="1.7 1.7 1"
 					geometry="primitive:plane;depth:0.1"
 					video-texture="src: #dancer-video"
-					position="0 2.08 -13.28"
+					position="0 1.62 -13.28"
 				></a-entity>
 
 
@@ -184,12 +201,11 @@
 					animation="property: light.intensity; delay: 40000; from: 0; to: 2">
 				</a-entity>
 
-				<!-- sfeerlicht -->
-				<a-entity alongpath="curve: #lighttrack; delay: 15000; dur: 20000; play:
-					false"
-					animation="property: light.intensity; delay: 14000; from: 0; to: 2"
-					animation__fadeout="property: light.intensity; delay: 35000; dur: 2000;
-					from: 2; to: 0"
+				<!-- sfeerlicht bij intro -->
+				<a-entity
+					alongpath="curve: #lighttrack; delay: 15000; dur: 20000;  startEvents: scenestart"
+					animation="property: light.intensity; delay: 18000; dur: 500; from: 0; to: 2; startEvents: scenestart"
+					animation__fadeout="property: light.intensity; delay: 35000; dur: 2000; from: 2; to: 0; startEvents: scenestart"
 					light="type: spot; castShadow: true; intensity: 0; angle: 40; decay: 0.58;
 					distance: 30; penumbra: 0.35"
 					position="0.3151 1.58049 27.43791"
@@ -201,18 +217,20 @@
 					distance: 15"
 					id="gezelligroodlampje"
 					position="-0.13648 4.21297 4.54"
-					animation="property: light.intensity; dur: 5000; delay: 25000; from: 0; to:
-					0.9">
+					animation="property: light.intensity; dur: 5000; delay: 25000; from: 0; to: 0.9;startEvents: scenestart">
 				</a-entity>
 
 				<!-- camera -->
 
 				<!-- rig voor VR camera te helpen moven. controlled door camera track-->
-				<a-entity alongpath="curve: #cameratrack; resetonplay:true; loop:false;
-					rotation:true; dur: 40000">
-					<!-- De camera moet op  0 H 0 blijven staan, omdat switchen naar VR de positie reset. Enkel H is gebruikt in non-vr mode voor hoogte -->
-					<a-entity camera="userHeight:1.6; fov:73.73"
-						look-controls
+
+			  <a-entity
+			  alongpath="curve: #cameratrack;     startEvents: scenestart; resetonplay:true; loop:false; rotation:true; dur: 41000"
+			  alongpath__exit="curve: #exit-cameratrack;startEvents: scenestart; resetonplay:true; loop:false; rotation:true; delay: 105000; dur: 15000"			        >
+				<!-- De camera moet op  0 H 0 blijven staan, omdat switchen naar VR de positie reset. Enkel H is gebruikt in non-vr mode voor hoogte -->
+				<a-entity
+						camera="userHeight:1.6; fov:73.73"
+						Xlook-controls
 						rotation="0 90 0"
 						position="0 1.7 0">
 						<a-entity light="type:point;intensity:0.4;distance:5;penumbra:1"></a-entity>

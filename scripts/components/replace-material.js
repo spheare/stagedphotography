@@ -2,10 +2,10 @@
 const environmentMap = THREE.ImageUtils.loadTextureCube([
 	'assets/images/envmap-xpos.png',
 	'assets/images/envmap-xneg.png',
-	'assets/images/envmap-ypos.png',
-	'assets/images/envmap-yneg.png',
 	'assets/images/envmap-zpos.png',
-	'assets/images/envmap-zneg.png'
+	'assets/images/envmap-zneg.png',
+	'assets/images/envmap-ypos.png',
+	'assets/images/envmap-yneg.png'
 	// 'assets/images/Right.png',
 	// 'assets/images/Left.png',
 	// 'assets/images/Top.png',
@@ -16,24 +16,24 @@ const environmentMap = THREE.ImageUtils.loadTextureCube([
 environmentMap.format = THREE.RGBFormat;
 
 const PATCH_MATERIALS = {
-	StoneMarbleCalacatta004_3K: {
-		// normaal
-		metalness: 0.8,
-		roughness: 0.5
-	},
+	// StoneMarbleCalacatta004_3K: {
+	// 	// normaal
+	// 	metalness: 0.8,
+	// 	roughness: 0.5
+	// },
 	Marble13_3K: {
 		// groen
 		metalness: 1,
 		roughness: 0.5
 	},
-	MetalSpottyDiscoloration001_1K: {
-		metalness: 0.9,
-		roughness: 0.2
-	},
-	Plaster17_3K: {
-		metalness: 0.1,
-		roughness: 1
-	}
+	// MetalSpottyDiscoloration001_1K: {
+	// 	metalness: 0.9,
+	// 	roughness: 0.2
+	// },
+	// Plaster17_3K: {
+	// 	metalness: 0.1,
+	// 	roughness: 1
+	// }
 };
 
 
