@@ -92,6 +92,7 @@
 							  crossOrigin="anonymous"
 							  src="assets/models/exitsign.glb"></a-asset-item>
 
+				<!-- autoplay is needed for iOS to precache but will not actually autoplay-->
 				<audio alt="Music"
 					   id="music-background"
 					   src="assets/music/background.mp3"
@@ -105,9 +106,7 @@
 					   autoplay
 					   preload="auto"></video>
 
-				<!-- autoplay is needed for iOS to precache but will not actually autoplay-->
-				<!-- <img alt="Dancer" id="person" src="assets/images/person.png" /> -->
-				<img alt="Textures"
+				<!-- <img alt="Textures"
 					 src="assets/images/px.png" />
 				<img alt="Textures"
 					 src="assets/images/nx.png" />
@@ -118,7 +117,7 @@
 				<img alt="Textures"
 					 src="assets/images/pz.png" />
 				<img alt="Textures"
-					 src="assets/images/nz.png" />
+					 src="assets/images/nz.png" /> -->
 			</a-assets>
 
 			<a-curve id="cameratrack"
@@ -204,11 +203,10 @@
 
 				<!-- spot op model -->
 				<a-entity id="spot-op-model"
-						  light="castShadow: true; type: spot; intensity: 0; distance: 10; penumbra:
-					0.48; groundColor: #7998ff"
+						  light="castShadow: true; type: spot; intensity: 0; decay: 0.5; distance: 11; penumbra: 0.48; groundColor: #7998ff"
 						  position="0 3.4244 -7.75103"
 						  rotation="0.03 0.15 179.99"
-						  animation="property: light.intensity; delay: 40000; from: 0; to: 2">
+						  animation="property: light.intensity; delay: 40000; from: 0; to: 2;startEvents: scenestart">
 				</a-entity>
 
 				<!-- sfeerlicht bij intro -->

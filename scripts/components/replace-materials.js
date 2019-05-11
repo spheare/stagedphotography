@@ -1,19 +1,19 @@
 // urls of the images, one per half axis
-const environmentMap = THREE.ImageUtils.loadTextureCube([
-	'assets/images/px.png',
-	'assets/images/nx.png',
-	'assets/images/pz.png',
-	'assets/images/nz.png',
-	'assets/images/py.png',
-	'assets/images/ny.png'
-	// 'assets/images/Right.png',
-	// 'assets/images/Left.png',
-	// 'assets/images/Top.png',
-	// 'assets/images/Bottom.png',
-	// 'assets/images/Front.png',
-	// 'assets/images/Back.png'
-]);
-environmentMap.format = THREE.RGBFormat;
+// const environmentMap = THREE.ImageUtils.loadTextureCube([
+// 	'assets/images/px.png',
+// 	'assets/images/nx.png',
+// 	'assets/images/pz.png',
+// 	'assets/images/nz.png',
+// 	'assets/images/py.png',
+// 	'assets/images/ny.png'
+// 	// 'assets/images/Right.png',
+// 	// 'assets/images/Left.png',
+// 	// 'assets/images/Top.png',
+// 	// 'assets/images/Bottom.png',
+// 	// 'assets/images/Front.png',
+// 	// 'assets/images/Back.png'
+// ]);
+// environmentMap.format = THREE.RGBFormat;
 
 const PATCH_MATERIALS = {
 	// StoneMarbleCalacatta004_3K: {

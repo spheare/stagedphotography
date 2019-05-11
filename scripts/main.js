@@ -6,7 +6,7 @@ const DEBUG =
 
 const Settings = {
 	DEFAULT_COUNTDOWN: DEBUG ? 0 : 2,
-	AUTO_RESET_TIMEOUT: 110 * 1000
+	AUTO_RESET_TIMEOUT: DEBUG ? 0 : 120 * 1000
 };
 
 const Selectors = {
@@ -104,7 +104,7 @@ function run() {
 		scene.emit(EVENT_SCENESTART);
 
 		// auto reset after TIMEOUT b/c cursor is broken in vr
-		setTimeout(() => document.location.reload(), Settings.AUTO_RESET_TIMEOUT);
+		if (Settings.AUTO_RESET_TIMEOUT) setTimeout(() => document.location.reload(), Settings.AUTO_RESET_TIMEOUT);
 
 		if (DEBUG) {
 			let sceneTime = 0;
