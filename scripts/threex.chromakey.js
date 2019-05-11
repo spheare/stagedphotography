@@ -11,7 +11,7 @@ THREEx.ChromaKeyMaterial = function(url, keyColor) {
 			video.load();
 		}
 	}
-	console.log('video is',video)
+	// console.log('video is',video)
 
 	var keyColorObject = new THREE.Color(keyColor);
 
@@ -70,6 +70,4 @@ THREEx.ChromaKeyMaterial = function(url, keyColor) {
 	});
 };
 
-THREEx.ChromaKeyMaterial.prototype = Object.create(
-	THREE.ShaderMaterial.prototype
-);
+THREEx.ChromaKeyMaterial.prototype = Object.create(THREE.ShaderMaterial.prototype);

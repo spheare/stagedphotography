@@ -5,7 +5,8 @@ const DEBUG =
 	document.location.href.indexOf('10.0.0') >= 0;
 
 const Settings = {
-	DEFAULT_COUNTDOWN: DEBUG ? 0 : 2
+	DEFAULT_COUNTDOWN: DEBUG ? 0 : 2,
+	AUTO_RESET_TIMEOUT: 110 * 1000
 };
 
 const Selectors = {
@@ -17,6 +18,12 @@ const Selectors = {
 	VIDEO: '#dancer-video',
 	TIMERSPAN: '.counter__timer'
 };
+
+const EVENT_SCENESTART = 'scenestart';
+
+// const EVENT_COORDINATOR = [
+// 	{start: 9, name:'event-decolight-on' } // deco licht aan
+// ];
 
 function main() {
 	console.info('VR Staged Photography - Kevin Vaesen - 2019');
@@ -59,6 +66,8 @@ function trackPreloadAssets() {
 					() => accept({ el, li })
 				);
 				if (el.complete || el.isLoaded || el.loaded) accept({ el, li });
+				if (el.tagName === 'VIDEO' && el.readyState === el.HAVE_ENOUGH_DATA) accept({ el, li });
+				if (el.tagName === 'AUDIO' && el.readyState === el.HAVE_ENOUGH_DATA) accept({ el, li });
 			})
 	);
 
@@ -87,13 +96,15 @@ function run() {
 		clearInterval(hTimer);
 		body.classList.remove('state-countdown');
 		body.classList.add('state-running');
-		console.log('resuming scene');
-		scene.pause(); // needed because object is not reset otherwise :/
-		// scene.reload();
 
+		scene.pause(); // needed because object is not reset otherwise :/
 		scene.play();
-		Array.from(document.querySelectorAll('a-entity')).forEach(el => el.emit('scenestart'));
-		scene.emit('scenestart');
+
+		Array.from(document.querySelectorAll('a-entity')).forEach(el => el.emit(EVENT_SCENESTART));
+		scene.emit(EVENT_SCENESTART);
+
+		// auto reset after TIMEOUT b/c cursor is broken in vr
+		setTimeout(() => document.location.reload(), Settings.AUTO_RESET_TIMEOUT);
 
 		if (DEBUG) {
 			let sceneTime = 0;
@@ -103,6 +114,7 @@ function run() {
 		}
 	}, 1000 * nCountDown);
 
+	// Do this here, it requires a user interaction in iOS
 	video.pause();
 	video.currentTime = 0;
 	video.play();
@@ -110,9 +122,8 @@ function run() {
 	audio.pause();
 	audio.currentTime = 0;
 	audio.play();
-	if (!DEBUG) {
-		// scene.enterVR();
-	}
+
+	if (!DEBUG) scene.enterVR();
 }
 // camera does not move in webvr mode: https://stackoverflow.com/questions/47761920/programmatically-change-webvr-camera-view
 // https://www.npmjs.com/package/aframe-travel-node
