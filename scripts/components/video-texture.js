@@ -10,17 +10,13 @@ const setMaterial = (obj, mat) => {
 
 AFRAME.registerComponent('video-texture', {
 	schema: {
-		src: { type: 'selector' }
+		src: { type: 'selector' },
+		colorkey: { type: 'number', default: 0xd432}
 	},
 
 	init() {
 		// MAKE SURE TO PLAY THE VIDEO VIA A USERINTERACTION
-		this.material = new THREEx.ChromaKeyMaterial( this.data.src, 0xd432);
-		/**/
-		// video.play();
-		// const texture = new THREE.VideoTexture( this.data.src );
-		// this.material = new THREE.MeshLambertMaterial( {map: texture} );
-
+		this.material = new THREEx.ChromaKeyMaterial(this.data.src, this.data.colorkey);
 		setMaterial(this.el.object3D, this.material);
 	},
 	tick() {

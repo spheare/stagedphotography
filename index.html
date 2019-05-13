@@ -101,7 +101,7 @@
 
 				<video alt="Video"
 					   id="dancer-video"
-					   src="assets/video/dancer-test-small.mp4"
+					   src="assets/video/dancer-small.mp4"
 					   loop="true"
 					   autoplay
 					   preload="auto"></video>
@@ -138,7 +138,7 @@
 				<a-curve-point position="0.0079 -0    10.86"></a-curve-point>
 				<a-curve-point position="0.0079 -2.5   8"></a-curve-point>
 				<a-curve-point position="-2     -1.4   -4.8"></a-curve-point>
-				<a-curve-point position="3      -2.5  -15.15118"></a-curve-point>
+				<a-curve-point position="-1      -2.5  -15.15118"></a-curve-point>
 				<a-curve-point position="20   -30   -40"></a-curve-point>
 				<a-curve-point position="20   -22   50"></a-curve-point>
 			</a-curve>
@@ -198,19 +198,26 @@
 				<a-entity id="dancer"
 						  scale="1.7 1.7 1"
 						  geometry="primitive:plane;depth:0.1"
-						  video-texture="src: #dancer-video"
-						  position="0 1.62 -13.28"></a-entity>
+						  video-texture="src: #dancer-video; colorkey: 0x000000"
+						  position="0 1.514 -13.28"></a-entity>
 
 				<!-- spot op model -->
-				<a-entity id="spot-op-model"
+				<!-- <a-entity id="spot-op-model"
 						  light="castShadow: true; type: spot; intensity: 0; decay: 0.5; distance: 11; penumbra: 0.48; groundColor: #7998ff"
 						  position="0 3.4244 -7.75103"
 						  rotation="0.03 0.15 179.99"
 						  animation="property: light.intensity; delay: 40000; from: 0; to: 2;startEvents: scenestart">
-				</a-entity>
+				</a-entity> -->
+
+				<a-entity id="spot-op-model"
+						  light="angle: 0; decay: 2; distance: 20; intensity: 0.00001; penumbra: 0.33; type: spot; castShadow: true"
+						  position="0 2.18285 -11"
+						  rotation="-25 0 0"
+						  animation="property: light.intensity; delay: 30000; dur: 2000; from: 0; to: 8;startEvents: scenestart"
+						  animation__angle="property: light.angle; delay: 30000; dur: 3000; from: 5; to: 35;startEvents: scenestart"></a-entity>
 
 				<!-- sfeerlicht bij intro -->
-				<a-curve id="lighttrack"
+				<a-curve id="lighttrack-left"
 						 closed="false">
 					<a-curve-point position="0.3151 1.58049 27.43791"></a-curve-point>
 					<a-curve-point position="6.0884 0.32615 27.29699"></a-curve-point>
@@ -218,26 +225,46 @@
 					<a-curve-point position="6.0884 2.4979 -5.13242"></a-curve-point>
 					<a-curve-point position="6.0884 20.53702 -34.93973"></a-curve-point>
 				</a-curve>
-				<!-- <a-draw-curve curveref="#lighttrack"
-							  material="shader: line; color: yellow;"></a-draw-curve> -->
-				<a-entity geometry="primitive:box"
-						  material="color:white;shader:flat"
-						  alongpath="delay: 15000; dur: 20000; curve: #lighttrack;  startEvents: scenestart"
-						  animation__fadein="delay: 10000; dur: 500; property: light.intensity;  from: 0; to: 2; startEvents: scenestart"
+				<a-entity Xgeometry="primitive:box"
+						  Xmaterial="color:white;shader:flat"
+						  alongpath="delay: 15000; dur: 20000; curve: #lighttrack-left;  startEvents: scenestart"
+						  animation__fadein="delay: 8000; dur: 1000; property: light.intensity;  from: 0; to: 2; startEvents: scenestart"
 						  animation__fadeout="delay: 30000; dur: 1000;  property: light.intensity; from: 2; to: 0; startEvents: scenestart"
 						  light="type: spot; castShadow: true; intensity: 0; angle: 40; decay: 0.58;
-					distance: 30; penumbra: 0.35"
+										distance: 30; penumbra: 0.35"
 						  position="0.3151 1.58049 27.43791"
-						  id="frontlight">
+						  id="frontlight-left">
 				</a-entity>
+				<!-- Don't do this: too many lights for iOS to handle, resulting in no textures.
+				<a-curve id="lighttrack-right"
+						 closed="false">
+					<a-curve-point position="-0.3151 1.58049 27.43791"></a-curve-point>
+					<a-curve-point position="-6.0884 0.32615 27.29699"></a-curve-point>
+					<a-curve-point position="-6.0884 1.94979 13.82852"></a-curve-point>
+					<a-curve-point position="-6.0884 2.4979 -5.13242"></a-curve-point>
+					<a-curve-point position="-6.0884 20.53702 -34.93973"></a-curve-point>
+				</a-curve>
+				<a-entity Xgeometry="primitive:box"
+						  Xmaterial="color:white;shader:flat"
+						  alongpath="delay: 18000; dur: 20000; curve: #lighttrack-right;  startEvents: scenestart"
+						  animation__fadein="delay: 8000; dur: 1000; property: light.intensity;  from: 0; to: 2; startEvents: scenestart"
+						  animation__fadeout="delay: 30000; dur: 1000;  property: light.intensity; from: 2; to: 0; startEvents: scenestart"
+						  light="type: spot; castShadow: true; intensity: 0; angle: 40; decay: 0.58; distance: 30; penumbra: 0.35"
+						  position="0.3151 1.58049 27.43791"
+						  id="frontlight-right">
+				</a-entity> -->
 
 				<!-- rood in midden van scene -->
-				<a-entity light="intensity: 0; type: point; color: #ff3322; decay: 0.5;
-					distance: 15"
+				<a-entity light="intensity: 0; type: point; color: #ff3322; decay: 0.5; distance: 15"
 						  id="gezelligroodlampje"
 						  position="-0.13648 4.21297 4.54"
 						  animation="property: light.intensity; dur: 5000; delay: 25000; from: 0; to: 0.9;startEvents: scenestart">
 				</a-entity>
+
+				<!-- <a-entity light="intensity: 0.2; type: ambient; color: #ffffff; decay: 0.5;distance: 10"
+						  position="0 0 0"
+						  >
+				</a-entity> -->
 			</a-entity>
 
 			<!-- camera -->
@@ -246,7 +273,7 @@
 			<a-entity camera="userHeight:1.6; fov:73.73"
 					  look-controls
 					  position="0 1.6 0">
-				<a-entity light="type:point;intensity:0.9;distance:5;penumbra:1"></a-entity>
+				<a-entity light="type:point;intensity:1;distance:5;penumbra:1"></a-entity>
 
 				<!-- due to a iOS + video bug, the cursor can no longer be controlled by the camera rotation -->
 				<!-- <a-entity cursor="fuse: true;"
