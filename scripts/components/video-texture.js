@@ -11,12 +11,14 @@ const setMaterial = (obj, mat) => {
 AFRAME.registerComponent('video-texture', {
 	schema: {
 		src: { type: 'selector' },
-		colorkey: { type: 'number', default: 0xd432}
+		colorkey: { type: 'string', default: '0xd432' }
 	},
 
 	init() {
 		// MAKE SURE TO PLAY THE VIDEO VIA A USERINTERACTION
-		this.material = new THREEx.ChromaKeyMaterial(this.data.src, this.data.colorkey);
+		const colorKey = parseInt(this.data.colorkey || '0x00');
+		console.log('colorKeyMaterial: color key is #' + colorKey.toString(16), this.data.colorkey);
+		this.material = new THREEx.ChromaKeyMaterial(this.data.src, colorKey);
 		setMaterial(this.el.object3D, this.material);
 	},
 	tick() {

@@ -154,7 +154,7 @@
 					  rotation="0 0 0"
 					  position="0 -1.7 0"
 					  alongpath="dur: 41000;rotation:true; curve: #cameratrack;startEvents: scenestart; resetonplay:true; loop:false;  "
-					  alongpath__exit=" rotation:true; delay: 80000; dur: 30000; curve: #exit-cameratrack;startEvents: scenestart; resetonplay:true; loop:false;">
+					  alongpath__exit=" rotation:true; delay: 85000; dur: 30000; curve: #exit-cameratrack;startEvents: scenestart; resetonplay:true; loop:false;">
 
 				<!-- omgeving-->
 				<a-entity id="theEnvironment"
@@ -197,7 +197,7 @@
 				<a-entity id="dancer"
 						  scale="1.7 1.7 1"
 						  geometry="primitive:plane;depth:0.1"
-						  video-texture="src: #dancer-video; colorkey: 0x000000"
+						  video-texture="src: #dancer-video; colorkey: 0x00D432"
 						  position="0 1.580 -13.28"></a-entity>
 
 				<!-- spot op model -->
@@ -209,16 +209,19 @@
 				</a-entity> -->
 
 				<a-entity id="spot-op-model"
-						  light="angle: 80; decay: 2; distance: 20; intensity: 0.00001; penumbra: 0.33; type: spot; castShadow: true"
+						  light="angle: 80; decay: 2; distance: 20; intensity: 2; penumbra: 0.33; type: spot; castShadow: true"
 						  position="0 2.18285 -11"
 						  rotation="-25 0 0"
-						  animation="property: light.intensity; delay: 30000; dur: 2000; from: 0; to: 8;startEvents: scenestart"
+						  animation="property: light.intensity; delay: 30000; dur: 2000; from: 2; to: 8;startEvents: scenestart"
 						  animation__angle="property: light.angle; delay: 30000; dur: 3000; from: 80; to: 35;startEvents: scenestart"></a-entity>
 
 				<!-- sfeerlicht bij intro -->
 				<a-curve id="lighttrack-left"
 						 closed="false">
 					<a-curve-point position="0.3151 1.58049 27.43791"></a-curve-point>
+					<a-curve-point position="-3 1.58049 27.43791"></a-curve-point>
+					<a-curve-point position="0 1.58049 27.43791"></a-curve-point>
+					<!-- <a-curve-point position="6 1.58049 27.43791"></a-curve-point> -->
 					<a-curve-point position="6.0884 0.32615 27.29699"></a-curve-point>
 					<a-curve-point position="6.0884 1.94979 13.82852"></a-curve-point>
 					<a-curve-point position="6.0884 2.4979 -5.13242"></a-curve-point>
@@ -226,7 +229,7 @@
 				</a-curve>
 				<a-entity Xgeometry="primitive:box"
 						  Xmaterial="color:white;shader:flat"
-						  alongpath="delay: 15000; dur: 20000; play:false;resetonplay:true; curve: #lighttrack-left;  loop:false; startEvents: scenestart"
+						  alongpath="delay: 8000; dur: 30000; play:false;resetonplay:true; curve: #lighttrack-left;  loop:false; startEvents: scenestart"
 						  animation__fadein="delay: 8000; dur: 1000; property: light.intensity;  from: 0; to: 2; startEvents: scenestart"
 						  animation__fadeout="delay: 30000; dur: 1000;  property: light.intensity; from: 2; to: 0; startEvents: scenestart"
 						  light="type: spot; castShadow: true; intensity: 0; angle: 40; decay: 0.58;
