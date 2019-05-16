@@ -10,7 +10,7 @@
 		  content="width=device-width, height=device-height, minimal-ui, user-scalable=
 			no, initial-scale= 1.0" />
 
-	<title>Staged Photography</title>
+	<title>VR Temple</title>
 	<link rel="stylesheet"
 		  href="css/main.css" />
 
@@ -221,11 +221,12 @@
 					<a-curve-point position="0.3151 1.58049 27.43791"></a-curve-point>
 					<a-curve-point position="-3 1.58049 27.43791"></a-curve-point>
 					<a-curve-point position="0 1.58049 27.43791"></a-curve-point>
-					<!-- <a-curve-point position="6 1.58049 27.43791"></a-curve-point> -->
-					<a-curve-point position="6.0884 0.32615 27.29699"></a-curve-point>
-					<a-curve-point position="6.0884 1.94979 13.82852"></a-curve-point>
-					<a-curve-point position="6.0884 2.4979 -5.13242"></a-curve-point>
-					<a-curve-point position="6.0884 20.53702 -34.93973"></a-curve-point>
+					<a-curve-point position="6   0.32615 27.29699"></a-curve-point>
+					<a-curve-point position="6   2 13.82852"></a-curve-point>
+					<a-curve-point position="6   2.5 -6.5"></a-curve-point>
+					<a-curve-point position="-6 2.5 -7.5"></a-curve-point>
+					<a-curve-point position="-6 2.5 -15"></a-curve-point>
+					<a-curve-point position="-6 10 -15"></a-curve-point>
 				</a-curve>
 				<a-entity Xgeometry="primitive:box"
 						  Xmaterial="color:white;shader:flat"
@@ -237,6 +238,8 @@
 						  position="0.3151 1.58049 27.43791"
 						  id="frontlight-left">
 				</a-entity>
+				<!-- <a-draw-curve curveref="#lighttrack-left" material="shader: line; color: blue;"></a-draw-curve> -->
+
 				<!-- Don't do this: too many lights for iOS to handle, resulting in no textures.
 				<a-curve id="lighttrack-right"
 						 closed="false">
