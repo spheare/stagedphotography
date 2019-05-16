@@ -3,7 +3,8 @@ html, body {
 	padding: 0;
 	background: black;
 	color: white;
-	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	/* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+	font-family: 'Courier New', Courier, monospace;
 }
 
 .intro {
@@ -15,7 +16,8 @@ html, body {
 	z-index: 10;
 	width: 100%;
 	height: 100%;
-	background: black;
+	background: url('../assets/images/back.jpg') no-repeat;
+	background-size: cover;
 }
 
 .countdown {
@@ -26,7 +28,8 @@ html, body {
 	bottom: 0;
 	display: none;
 	z-index: 10;
-	background: black;
+	background: url('../assets/images/back.jpg') no-repeat;
+	background-size: cover;
 }
 
 .scene {
@@ -73,13 +76,38 @@ html, body {
 
 .welcome__startbutton {
 	font-size: 3em;
-	color: black;
-	background: white;
-	border: 2px solid transparent;
+	color: cyan;
+	text-shadow: 0px 0px 4px cyan;
+	box-shadow: 0px 0px 4px cyan;
+	background: transparent;
+	border: 4px solid cyan;
 	padding: 30px;
 	display: none;
 	margin: 0 auto;
 	border-radius: 2px;
+	transition: text-shadow 500ms, box-shadow 500ms;
+	animation: glow 600ms alternate infinite;
+}
+
+@keyframes glow {
+	0% {
+		text-shadow: 0px 0px 4px cyan;
+		box-shadow: 0px 0px 4px cyan;
+	}
+	100% {
+		text-shadow: 0px 0px 13px cyan;
+		box-shadow: 0px 0px 13px cyan;
+	}
+}
+
+.welcome__startbutton:hover {
+	text-shadow: 0px 0px 20px cyan;
+	box-shadow: 0px 0px 20px cyan;
+}
+
+.welcome__startbutton:active {
+	text-shadow: 0px 0px 30px cyan;
+	box-shadow: 0px 0px 30px cyan;
 }
 
 .welcome__reload {
@@ -96,12 +124,6 @@ html, body {
 
 .welcome--load-complete .welcome__loadstatus {
 	display: none;
-}
-
-.welcome__startbutton:active {
-	background: black;
-	color: white;
-	border: 2px solid white;
 }
 
 .welcome--load-complete .welcome__startbutton {

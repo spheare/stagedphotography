@@ -56,7 +56,7 @@
 					<div></div>
 				</div>
 			</div>
-			<button class="welcome__startbutton">Tap to Start</button>
+			<button class="welcome__startbutton">START</button>
 			<a href="javascript:document.location.reload()"
 			   class="welcome__reload">Problemen met laden?</a>
 		</div>
@@ -79,8 +79,7 @@
 	</section>
 
 	<section class="scene">
-		<a-scene stats
-				 shadow="type:pcf">
+		<a-scene shadow="type:pcf">
 			<!-- assets -->
 			<a-assets>
 				<a-asset-item alt="Main Scene"
@@ -199,7 +198,7 @@
 						  scale="1.7 1.7 1"
 						  geometry="primitive:plane;depth:0.1"
 						  video-texture="src: #dancer-video; colorkey: 0x000000"
-						  position="0 1.514 -13.28"></a-entity>
+						  position="0 1.580 -13.28"></a-entity>
 
 				<!-- spot op model -->
 				<!-- <a-entity id="spot-op-model"
@@ -210,11 +209,11 @@
 				</a-entity> -->
 
 				<a-entity id="spot-op-model"
-						  light="angle: 0; decay: 2; distance: 20; intensity: 0.00001; penumbra: 0.33; type: spot; castShadow: true"
+						  light="angle: 80; decay: 2; distance: 20; intensity: 0.00001; penumbra: 0.33; type: spot; castShadow: true"
 						  position="0 2.18285 -11"
 						  rotation="-25 0 0"
 						  animation="property: light.intensity; delay: 30000; dur: 2000; from: 0; to: 8;startEvents: scenestart"
-						  animation__angle="property: light.angle; delay: 30000; dur: 3000; from: 5; to: 35;startEvents: scenestart"></a-entity>
+						  animation__angle="property: light.angle; delay: 30000; dur: 3000; from: 80; to: 35;startEvents: scenestart"></a-entity>
 
 				<!-- sfeerlicht bij intro -->
 				<a-curve id="lighttrack-left"
@@ -227,7 +226,7 @@
 				</a-curve>
 				<a-entity Xgeometry="primitive:box"
 						  Xmaterial="color:white;shader:flat"
-						  alongpath="delay: 15000; dur: 20000; curve: #lighttrack-left;  startEvents: scenestart"
+						  alongpath="delay: 15000; dur: 20000; play:false;resetonplay:true; curve: #lighttrack-left;  loop:false; startEvents: scenestart"
 						  animation__fadein="delay: 8000; dur: 1000; property: light.intensity;  from: 0; to: 2; startEvents: scenestart"
 						  animation__fadeout="delay: 30000; dur: 1000;  property: light.intensity; from: 2; to: 0; startEvents: scenestart"
 						  light="type: spot; castShadow: true; intensity: 0; angle: 40; decay: 0.58;
