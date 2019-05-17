@@ -1,11 +1,9 @@
-const DEBUG =
-	document.location.href.indexOf('127.0.0.1') >= 0 ||
-	document.location.href.indexOf('localhost') >= 0 ||
-	// document.location.href.indexOf('192.168') >= 0 ||
-	document.location.href.indexOf('10.0.0') >= 0;
+const DEBUG = document.location.href.indexOf('127.0.0.1') >= 0 || document.location.href.indexOf('localhost') >= 0;
+// document.location.href.indexOf('192.168') >= 0 ||
+// document.location.href.indexOf('10.0.0') >= 0;
 
 const Settings = {
-	DEFAULT_COUNTDOWN: DEBUG ? 0 : 2,
+	DEFAULT_COUNTDOWN: DEBUG ? 0 : 10,
 	AUTO_RESET_TIMEOUT: DEBUG ? 0 : 120 * 1000
 };
 
@@ -99,6 +97,8 @@ function run() {
 
 		scene.pause(); // needed because object is not reset otherwise :/
 		scene.play();
+		video.play();
+		audio.play();
 
 		Array.from(document.querySelectorAll('a-entity')).forEach(el => el.emit(EVENT_SCENESTART));
 		scene.emit(EVENT_SCENESTART);
@@ -117,11 +117,13 @@ function run() {
 	// Do this here, it requires a user interaction in iOS
 	video.pause();
 	video.currentTime = 0;
-	video.play();
+	video.play(); // Must be done here, play must be activated with a useraction
+	video.pause(); // needed so we can un-pause in the settimeout
 
 	audio.pause();
 	audio.currentTime = 0;
 	audio.play();
+	audio.pause();
 
 	if (!DEBUG) scene.enterVR();
 }

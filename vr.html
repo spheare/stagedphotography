@@ -18,30 +18,16 @@
 	<script src="scripts/webvr-polyfill.js"></script>
 	<script src="scripts/aframe.min.js"></script>
 	<script src="scripts/threex.chromakey.js"></script>
-	<!-- <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script> -->
-	<!-- <script src="scripts/aframe-eventset-component.min.js"></script> -->
-	<!-- <script src="scripts/aframe-template-component.min.js"></script> -->
-	<script src="scripts/components/automove.js"></script>
+
 	<script src="scripts/components/wireframe-shader.js"></script>
-	<script src="scripts/components/model-load-event.js"></script>
 	<script src="scripts/components/video-texture.js"></script>
 	<script src="scripts/components/replace-materials.js"></script>
 	<script src="scripts/components/fixvec3animation.js"></script>
-	<script src="scripts/components/occlusion-map.js"></script>
 	<script src="scripts/components/reset-on-click.js"></script>
 
 	<script src="scripts/aframe-curve-component.min.js"></script>
 	<script src="scripts/aframe-alongpath-component.min.js"></script>
 	<script src="scripts/aframe-environment.js"></script>
-
-	<!-- <script src="scripts/components/move-to-portal.js"></script> -->
-	<!-- <script src="scripts/aframe-inspector.min.js"></script> -->
-
-	<!-- <script src="https://unpkg.com/aframe-inspector@0.8.x/dist/aframe-inspector.min.js"></script> -->
-	<!-- <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.13.1/dist/aframe-extras.min.js"></script> -->
-	<!-- <script src="https://unpkg.com/aframe-environment-component@1.0.0/dist/aframe-environment-component.min.js"></script> -->
-	<!-- <script src="https://unpkg.com/aframe-animation-component@3.2.1/dist/aframe-animation-component.min.js"></script> -->
-	<!-- <script src="gpoly.js"></script> -->
 
 </head>
 
@@ -65,13 +51,13 @@
 	<section class="countdown">
 		<div class="counter">
 			<span class="counter__left">
-				<span class="counter__turn">Please turn your device sideways</span>
-				<span class="counter__text">insert the phone into your VR headset</span>
+				<span class="counter__turn">Draai het apparaat in landschapsmodus</span>
+				<span class="counter__text">Plaats de telefoon in de VR headset</span>
 				<span class="counter__timer">10</span>
 			</span>
 
 			<span class="counter__right">
-				<span class="counter__text">insert the phone into your VR headset</span>
+				<span class="counter__text">Plaats de telefoon in de VR headset</span>
 				<span class="counter__timer">10</span>
 			</span>
 
@@ -105,6 +91,9 @@
 					   autoplay
 					   preload="auto"></video>
 
+				<img src="assets/images/turnaround.png"
+					 alt="texture"
+					 id="#turnaround" />
 				<!-- <img alt="Textures"
 					 src="assets/images/px.png" />
 				<img alt="Textures"
@@ -228,9 +217,7 @@
 					<a-curve-point position="-6 2.5 -15"></a-curve-point>
 					<a-curve-point position="-6 10 -15"></a-curve-point>
 				</a-curve>
-				<a-entity Xgeometry="primitive:box"
-						  Xmaterial="color:white;shader:flat"
-						  alongpath="delay: 8000; dur: 30000; play:false;resetonplay:true; curve: #lighttrack-left;  loop:false; startEvents: scenestart"
+				<a-entity alongpath="delay: 8000; dur: 30000; play:false;resetonplay:true; curve: #lighttrack-left;  loop:false; startEvents: scenestart"
 						  animation__fadein="delay: 8000; dur: 1000; property: light.intensity;  from: 0; to: 2; startEvents: scenestart"
 						  animation__fadeout="delay: 30000; dur: 1000;  property: light.intensity; from: 2; to: 0; startEvents: scenestart"
 						  light="type: spot; castShadow: true; intensity: 0; angle: 40; decay: 0.58;
@@ -275,13 +262,34 @@
 			<!-- camera -->
 
 			<!-- De camera moet op  0 H 0 blijven staan, omdat switchen naar VR de positie reset. Enkel H is gebruikt in non-vr mode voor hoogte -->
-			<a-entity camera="userHeight:1.6; fov:73.73"
+			<a-entity camera=" fov:73.73"
 					  look-controls
 					  position="0 1.6 0">
 				<a-entity light="type:point;intensity:1;distance:5;penumbra:1"></a-entity>
 
-				<!-- due to a iOS + video bug, the cursor can no longer be controlled by the camera rotation -->
-				<!-- <a-entity cursor="fuse: true;"
+			</a-entity>
+
+			<!-- camera safe-box met indicaties voor richting -->
+			<a-entity id="safebox">
+				<a-entity geometry="primitive: plane; width: 2; height: 0.5"
+						  position="0 2.5 2"
+						  rotation="0 180"
+						  material="src: assets/images/turnaround.png; depthTest: false; depthWrite: false; transparent: true; blending: additive; emissive: #051415; fog: false">
+				</a-entity>
+				<a-entity geometry="primitive: plane; width: 2; height: 0.5"
+						  position="1.4163 2.45533 1.06336"
+						  rotation="0 -120"
+						  material="src: assets/images/turnaround.png; depthTest: false; depthWrite: false; transparent: true; blending: additive; emissive: #051415; fog: false">
+				</a-entity>
+				<a-entity geometry="primitive: plane; width: 2; height: 0.5"
+						  position="-1.4163 2.45533 1.06336"
+						  rotation="0 120"
+						  material="src: assets/images/turnaround.png; depthTest: false; depthWrite: false; transparent: true; blending: additive; emissive: #051415; fog: false">
+				</a-entity>
+			</a-entity>
+
+			<!-- due to a iOS + video bug, the cursor can no longer be controlled by the camera rotation -->
+			<!-- <a-entity cursor="fuse: true;"
 						  material="color: white; shader: flat"
 						  position="0 1.6 -2"
 						  scale="0.005 0.005 0.005"
